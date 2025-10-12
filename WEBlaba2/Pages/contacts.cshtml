@@ -1,0 +1,105 @@
+﻿@page
+@model WEBlaba2.Pages.contactsModel
+@{
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Рив-Гош</title>
+    <link rel="stylesheet" href="~/styles/Stylescss.css" />
+</head>
+<body class="menu">
+    <div style="background: #ff8000" class="base header">
+        <div class="grid-container-head">
+            <div class="grid-item-center"><img style="width:150px" src="images/logo.png"></div>
+            <div class="grid-item-center"><h1>РИВ ГОШ</h1></div>
+            <div class="grid-item-center" bgcolor="#ffbb34">
+                <div class="flex-container" style="background: #ffbb34; width:100%; height:100%; flex-direction:column ; justify-content:space-evenly">
+                    <div style="gap: 15px; padding: 0 10px;" class="flex-container">
+                        <div class="flex-item" style="width: 60px; text-align: right; flex: none;">логин: </div>
+                        <div class="flex-item"><input type="text"></div>
+                    </div>
+                    <div style="gap: 15px; padding: 0 10px;" class="flex-container">
+                        <div class="flex-item" style="width: 60px; text-align: right; flex: none;">пароль: </div>
+                        <div class="flex-item"><input type="password"></div>
+                    </div>
+                    <div class="flex-container" style="justify-content:center">
+                        <input type="submit" value="войти" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="flex-container-razdels base" height="35">
+        <div class="flex-item-center"> <A href="#">Раздел 1</A> </div>
+        <div class="flex-item-center"> <A href="#">Раздел 2</A></div>
+        <div class="flex-item-center"> <A href="#">Раздел 3</A></div>
+        <div class="flex-item-center"> <A href="#">Раздел 4</A> </div>
+    </div>
+
+    <div class="grid-container-main base ">
+        <div class="grid-item" style="background:#ff8000">
+            <div class="flex-container " style="flex-direction:column">
+                <div class="flex-item-center"> <a asp-page="/Index">Главная</a></div>
+                <div class="flex-item-center"> <a asp-page="/Catalog"> Каталог</a></div>
+                <div class="flex-item-center"> <a asp-page="/contacts"> Контакты</a></div>
+                <div class="flex-item-center"> <a asp-page="/aboutme"> О нас</a> </div>
+            </div>
+        </div>
+
+        <div class="grid-item">
+            <div>
+                <h3 class="HeaderText">Напишите нам</h3><br>
+                <form method="post" action="#" class="HeaderText">
+                    <input class="input" type="text" name="Name" placeholder="Ваше имя"><br>
+                    <input class="input"  type="text" name="Email" placeholder="Ваш Email"><br>
+                    <input class="input" type="text" name="Theme" placeholder="Тема"><br>
+                    <textarea class="input" cols="50" rows="10" name="Message" placeholder="Чем вы хотели с нами поделиться?"></textarea><br>
+
+                    <input type="button" value="Отправить">
+
+
+                </form><br>
+                <h3 class="HeaderText">Вы можете найти наши магазины по карте</h3>
+                <div align="center">
+                    <script type="text/javascript" charset="utf-8" async src="https://api-maps.yandex.ru/services/constructor/1.0/js/?um=constructor%3A4062e6e83cc524aa79bed994908808d46e01a200dd7ad0fef957806efdd9e358&amp;width=400&amp;height=300&amp;lang=ru_RU&amp;scroll=true"></script>
+                </div>
+                <h6>Юридисечкий адресс: 198095, Санкт-Петербург, Митрофаньевское шоссе, д. 2, корпус 9, лит. В</h6>
+                <p>Наш номер телефона: <a href="tel:88002344460">8 (800) 2344460</a>.(с 9 до 21 ежедневно)</p><br>
+                <p>Наш Email адрес: <a href="mailto:shopadmin@rivegauche.ru">shopadmin@rivegauche.ru</a>.</p><br>
+
+
+            </div>
+        </div>
+        <div class="grid-item" style="background:#ff8000">
+            <div class="flex-container" style="flex-direction:column ; justify-content:space-evenly">
+                <div class="flex-item-center">
+                    <a href=https://www.dior.com />
+                    <img class="baner" src="images/Dior_Logo.png">
+
+                </div>
+                <div class="flex-item-center">
+                    <a href=https://www.versace.ru />
+                    <img class="baner" src="images/Versace.jpg">
+
+                </div>
+                <div class="flex-item-center">
+                    <a href=https://www.dove.com/us/en/home.html>
+                        <img class="baner" src="images/dove.jpg">
+                    </a>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+
+    <div class="base head" style="background: #ff8000;">
+        <p class="HeaderText" style="height:35px; margin:0; padding:5px">© 2025 РИВ ГОШ. Все права защищены.</p>
+        <p class="HeaderText" style="height:35px; margin:0; padding:5px">Телефон: 8 (800) 2344460 | shopadmin@rivegauche.ru</p>
+    </div>
+
+
+</body>
+</html> 

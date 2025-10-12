@@ -1,0 +1,105 @@
+﻿@page
+@model WEBlaba2.Pages.aboutmeModel
+@{
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Рив-Гош</title>
+    <link rel="stylesheet" href="~/styles/Stylescss.css" />
+</head>
+<body class="menu">
+    <div style="background: #ff8000" class="base header">
+        <div class="grid-container-head">
+            <div class="grid-item-center"><img style="width:150px" src="images/logo.png"></div>
+            <div class="grid-item-center"><h1>РИВ ГОШ</h1></div>
+            <div class="grid-item-center" bgcolor="#ffbb34">
+                <div class="flex-container" style="background: #ffbb34; width:100%; height:100%; flex-direction:column ; justify-content:space-evenly">
+                    <div style="gap: 15px; padding: 0 10px;" class="flex-container">
+                        <div class="flex-item" style="width: 60px; text-align: right; flex: none;">логин: </div>
+                        <div class="flex-item"><input type="text"></div>
+                    </div>
+                    <div style="gap: 15px; padding: 0 10px;" class="flex-container">
+                        <div class="flex-item" style="width: 60px; text-align: right; flex: none;">пароль: </div>
+                        <div class="flex-item"><input type="password"></div>
+                    </div>
+                    <div class="flex-container" style="justify-content:center">
+                        <input type="submit" value="войти" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="flex-container-razdels base" height="35">
+        <div class="flex-item-center"> <A href="#">Раздел 1</A> </div>
+        <div class="flex-item-center"> <A href="#">Раздел 2</A></div>
+        <div class="flex-item-center"> <A href="#">Раздел 3</A></div>
+        <div class="flex-item-center"> <A href="#">Раздел 4</A> </div>
+    </div>
+
+    <div class="grid-container-main base ">
+        <div class="grid-item" style="background:#ff8000">
+            <div class="flex-container " style="flex-direction:column">
+                <div class="flex-item-center"> <a asp-page="/Index">Главная</a></div>
+                <div class="flex-item-center"> <a asp-page="/Catalog"> Каталог</a></div>
+                <div class="flex-item-center"> <a asp-page="/contacts"> Контакты</a></div>
+                <div class="flex-item-center"> <a asp-page="/aboutme"> О нас</a> </div>
+            </div>
+        </div>
+
+        <div class="grid-item">
+            <h3 class="HeaderText">О нас</h3>
+            <img class="img" src="../images/Director.jpg"  align="left" style="margin-right: 10px"><h2 align="center"></h2>
+            <p class="menu">
+                Интернет магазин РИВ ГОШ является официальной точкой продажи всех представленных на сайте
+                парфюмерно-косметических брендов. Вся продукция представленная на сайте поставляется напрямую марками-производителями, которые гарантируют качество и сроки годности данного товара.
+            </p>
+            <p class="menu">
+                «Рив Гош» (фр. Rive gauche — «Левый берег»)
+                — российская парфюмерно-косметическая сеть, основанная в 1995 году Павлом и Ларисой Карабань в Санкт-Петербурге Название сети вдохновлено наименованием богемного квартала Rive Gauche в Париже,
+                ассоциирующегося с модой, искусством и стилем.
+
+            </p>
+            <h3>Некоторые события из истории сети:</h3>
+            <div class="flex-container text menu" style="flex-direction:column; justify-content:space-evenly;">
+                <div class="flex-item text" > В середине октября 2008 года был открыт первый магазин в Москве в ТЦ «Пирамида» на Тверской улице. В 2016 году этот магазин был закрыт.</div>
+                <div class="flex-item text"> 30 декабря 2010 года сеть «Рив Гош» приобрела 32 магазина «Дуглас Риволи».</div>
+                <div class="flex-item text"> С конца 2007 года сеть принадлежала холдингу «Финстрой» (управляет активами Олега Бойко), который приобрёл 75% акций «Рив Гош».</div>
+                <div class="flex-item text"> В августе 2012 года Олег Бойко расстался с контрольным пакетом сети, продав 51% её акций бывшим совладельцам сети «Лента» Дмитрию Костыгину и Августу Мейеру..</div>
+                <div class="flex-item text"> По состоянию на 2021 год владельцами «Рив Гош» были жена бизнесмена Августа Мейера Инна Мейер (51%), Лариса и Павел Карабань (25%), Олег Бойко (24%).</div>
+                <div class="flex-item text"> В октябре 2020 года президентом компании стал Эдгар Шабанов, сменив на посту основателя группы компаний Павла Карабаня.</div>
+            </div>
+        </div>
+
+        <div class="grid-item" style="background:#ff8000">
+            <div class="flex-container" style="flex-direction:column ; justify-content:space-evenly">
+                <div class="flex-item-center">
+                    <a href=https://www.dior.com />
+                    <img class="baner" src="images/Dior_Logo.png">
+
+                </div>
+                <div class="flex-item-center">
+                    <a href=https://www.versace.ru />
+                    <img class="baner" src="images/Versace.jpg">
+
+                </div>
+                <div class="flex-item-center">
+                    <a href=https://www.dove.com/us/en/home.html>
+                        <img class="baner" src="images/dove.jpg">
+                    </a>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+
+    <div class="base head" style="background: #ff8000;">
+        <p class="HeaderText text" style="height:35px; margin:0; padding:5px">© 2025 РИВ ГОШ. Все права защищены.</p>
+        <p class="HeaderText text" style="height:35px; margin:0; padding:5px">Телефон: 8 (800) 2344460 | shopadmin@rivegauche.ru</p>
+    </div>
+
+
+</body>
+</html> 
