@@ -1,12 +1,13 @@
 ﻿@page
-@model WEBlaba2.Pages.auth.registrationModel
+@model WEBlaba2.Pages.auth.AuthorizationModel
 @{
 }
+
 
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Рив-Гош</title>
+    <title>Рив-Гош - Вход</title>
     <link href="~/styles/stylescss.css" rel="stylesheet" />
 </head>
 <body class="menuCatalog">
@@ -15,6 +16,7 @@
             <div class="grid-item-center"><img style="width:150px" src="~/images/logo.png"></div>
             <div class="grid-item-center"><h1>РИВ ГОШ</h1></div>
             <div class="grid-item-center" bgcolor="#ffbb34">
+                
             </div>
         </div>
     </div>
@@ -37,53 +39,28 @@
         </div>
 
         <div class="grid-item menu">
-            <h3>Регистрация</h3>
-            <form class="registration-form" method="post">
-                <div class="form-row">
-                    <div class="form-group">
-                        <label for="lastName">Фамилия *</label>
-                        <input type="text" id="lastName" name="lastName" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="firstName">Имя *</label>
-                        <input type="text" id="firstName" name="firstName" required>
-                    </div>
-                </div>
-
-                <div class="form-row">
-                    <div class="form-group">
-                        <label for="middleName">Отчество</label>
-                        <input type="text" id="middleName" name="middleName">
-                    </div>
-                    <div class="form-group">
-                        <label for="phone">Телефон *</label>
-                        <input type="tel" id="phone" name="phone" required>
-                    </div>
+            <h3>Вход в аккаунт</h3>
+            <form class="auth-form" method="post">
+                <div class="form-group full-width">
+                    <label for="login">Логин или Email *</label>
+                    <input type="text" id="login" name="login" required placeholder="Введите ваш логин или email">
                 </div>
 
                 <div class="form-group full-width">
-                    <label for="email">Электронная почта *</label>
-                    <input type="email" id="email" name="email" required>
+                    <label for="password">Пароль *</label>
+                    <input type="password" id="password" name="password" required placeholder="Введите ваш пароль">
                 </div>
 
-                <div class="form-row">
-                    <div class="form-group">
-                        <label for="login">Логин *</label>
-                        <input type="text" id="login" name="login" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="password">Пароль *</label>
-                        <input type="password" id="password" name="password" required>
-                    </div>
-                </div>
 
                 <div class="form-group full-width">
-                    <button type="submit" class="submit-btn">Зарегистрироваться</button>
+                    <button type="submit" class="submit-btn">Войти</button>
                 </div>
 
                 <div class="form-links">
-                    <p>Уже есть аккаунт? <a asp-page="/auth/Authorization">Войти</a></p>
+                    <p>Нет аккаунта? <a asp-page="/auth/registration">Зарегистрироваться</a></p>
                 </div>
+
+                
             </form>
         </div>
 
@@ -91,12 +68,12 @@
             <div class="flex-container" style="flex-direction:column ; justify-content:space-evenly">
                 <div class="flex-item-center">
                     <a href="https://www.dior.com">
-                        <img class="baner" src="~/images/Dior_Logo.png">
+                    <img class="baner" src="~/images/Dior_Logo.png">
                     </a>
                 </div>
                 <div class="flex-item-center">
                     <a href="https://www.versace.ru">
-                        <img class="baner" src="~/images/Versace.jpg">
+                    <img class="baner" src="~/images/Versace.jpg">
                     </a>
                 </div>
                 <div class="flex-item-center">

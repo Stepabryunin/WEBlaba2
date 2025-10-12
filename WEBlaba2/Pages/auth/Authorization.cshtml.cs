@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace WEBlaba2.Pages.auth
 {
-    public class registrationModel : PageModel
+    public class AuthorizationModel : PageModel
     {
         public void OnGet()
         {

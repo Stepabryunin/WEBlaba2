@@ -1,9 +1,9 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace WEBlaba2.Pages.auth
+namespace WEBlaba2.Pages.feedback
 {
-    public class registrationModel : PageModel
+    public class feedbackModel : PageModel
     {
         public void OnGet()
         {
