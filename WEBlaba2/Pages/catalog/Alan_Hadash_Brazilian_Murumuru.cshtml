@@ -6,36 +6,66 @@
 <html>
 <head>
     <title>Рив-Гош</title>
-	<link href="~/styles/stylescss.css" rel="stylesheet" />
+    <link href="~/styles/stylescss.css" rel="stylesheet" />
 </head>
 <body class="menuCatalog">
-    <div  class="roundl base header">
+    <div class="base header roundl">
         <div class="grid-container-head">
             <div class="grid-item-center"><img style="width:150px" src="~/images/logo.png"></div>
             <div class="grid-item-center"><h1>РИВ ГОШ</h1></div>
             <div class="grid-item-center" bgcolor="#ffbb34">
-                <div class="flex-container roundlauth" style=" width:100%; height:100%; flex-direction:column ; justify-content:space-evenly">
-                    <div style="gap: 15px; padding: 0 10px;" class="flex-container">
-                        <div class="flex-item" style="width: 60px; text-align: right; flex: none;">логин: </div>
-                        <div class="flex-item"><input type="text"></div>
+                @if (!Model.IsAuthenticated)
+                {
+                    <!-- Блок авторизации для НЕавторизованных пользователей -->
+                    <form method="post" asp-page="/auth/Authorization">
+                        <input type="hidden" name="returnUrl" value="@(ViewContext.HttpContext.Request.Path + ViewContext.HttpContext.Request.QueryString)" />
+                        <div class="flex-container roundlauth" style="background: #ffbb34; width:100%; height:100%; flex-direction:column ; justify-content:space-evenly">
+                            <div style="gap: 15px; padding: 0 10px;" class="flex-container">
+                                <div class="flex-item" style="width: 60px; text-align: right; flex: none;">логин: </div>
+                                <div class="flex-item">
+                                    <input type="text" name="LoginData.Login" placeholder="Email">
+                                </div>
+                            </div>
+                            <div style="gap: 15px; padding: 0 10px;" class="flex-container">
+                                <div class="flex-item" style="width: 60px; text-align: right; flex: none;">пароль: </div>
+                                <div class="flex-item">
+                                    <input type="password" name="LoginData.Password" placeholder="Пароль">
+                                </div>
+                            </div>
+                            <div class="flex-container">
+                                <button type="submit" class="flex-item" style="margin: 0 3px; padding: 3px 6px; font-size:14px;border-radius: 6px; margin-bottom: 5px;">войти</button>
+                                <button type="button" id="registerBtn" class="flex-item" style="margin: 0 3px; padding: 3px 6px; font-size:14px;border-radius: 6px; margin-bottom: 5px;">Зарегистрироваться</button>
+                            </div>
+
+                            <script>
+                                document.getElementById('registerBtn').addEventListener('click', function  () {
+                                    window.location.href = '/auth/registration';
+                                });
+                            </script>
+
+                        </div>
+                    </form>
+                }
+                else
+                {
+                    <!-- Блок приветствия для авторизованных пользователей -->
+                    <div class="flex-container roundlauth" style="background: #ffbb34; width:100%; height:100%; flex-direction:column ; justify-content:space-evenly; align-items:center;">
+                        <div style="text-align: center;">
+                            <div>Добро пожаловать!</div>
+                            <div><strong>@Model.UserName</strong></div>
+                        </div>
+                        <div class="flex-container" style="justify-content:center; gap: 10px;">
+                            <a asp-page="/Profile" class="a-btn a-btn-profile">Профиль</a>
+                            <a asp-page="/Logout"
+                               asp-route-returnUrl="@(ViewContext.HttpContext.Request.Path + ViewContext.HttpContext.Request.QueryString)"
+                               class="a-btn a-btn-logout">
+                                Выйти
+                            </a>
+                        </div>
                     </div>
-                    <div style="gap: 15px; padding: 0 10px;" class="flex-container">
-                        <div class="flex-item" style="width: 60px; text-align: right; flex: none;">пароль: </div>
-                        <div class="flex-item"><input type="password"></div>
-                    </div>
-                    <div class="flex-container" style="justify-content:center">
-                        <input type="submit" value="войти" />
-                    </div>
-                </div>
+                }
             </div>
         </div>
-    </div>
-
-    <div class="flex-container-razdels base" height="35">
-        <div class="flex-item-center"> <A href="#">Раздел 1</A> </div>
-        <div class="flex-item-center"> <A href="#">Раздел 2</A></div>
-        <div class="flex-item-center"> <A href="#">Раздел 3</A></div>
-        <div class="flex-item-center"> <A href="#">Раздел 4</A> </div>
     </div>
 
     <div class="grid-container-main base ">
@@ -59,60 +89,167 @@
                         <span class="nav-text">О нас</span>
                     </a>
                 </nav>
-
-          
-                
             </div>
         </div>
 
         <div class="grid-item">
-            
             <img class="img-border" src="~/imagesCatalog/Alan Hadash Brazilian Murumuru Hair Сonditioner.jpg" />
-            <h3 class=" heading">Alan Hadash Brazilian Murumuru Hair Сonditioner<br></h3>
+            <h3 class="heading">Alan Hadash Brazilian Murumuru Hair Conditioner<br></h3>
             <p class="shortDescription">Кондиционер для окрашенных и жестких волос | 200 мл</p>
-            <p>719 ₽</p>
+            <p class="price" style="font-size: 24px; font-weight: bold; color: #ff8000;">719 ₽</p>
             <p class="fullDescription">
                 Формула кондиционера Brazilian Murumuru разработана для окрашенных и жестких волос. Хорошо смягчает и увлажняет, глубоко питает и борется с ломкостью.
             </p><br />
+
+            <!-- Блок с количеством и добавлением в корзину -->
+            <div class="add-to-cart-section" style="margin: 25px 0; padding: 20px; background: #fffaf0; border-radius: 10px; border: 2px solid #ffebcc;">
+                <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 15px;">
+                    <p style="margin: 0; font-weight: bold;">Осталось на складе: <span id="stockCount">@Model.product.count</span></p>
+                    <div style="display: flex; align-items: center; gap: 10px;">
+                        <button type="button" id="decreaseBtn" style="width: 35px; height: 35px; border: none; background: #ffbb34; border-radius: 50%; font-weight: bold; cursor: pointer;">-</button>
+                        <span id="quantity" style="font-size: 18px; font-weight: bold; min-width: 30px; text-align: center;">1</span>
+                        <button type="button" id="increaseBtn" style="width: 35px; height: 35px; border: none; background: #ffbb34; border-radius: 50%; font-weight: bold; cursor: pointer;">+</button>
+                    </div>
+                </div>
+
+     
+                @if (!string.IsNullOrEmpty(Model.Message))
+                {
+                    <div class="@(Model.Message.Contains("успешно") ? "alert-success" : "alert-error")"
+                         style="margin: 15px 0; padding: 12px; border-radius: 6px; text-align: center;
+                                background: @(Model.Message.Contains("успешно") ? "#d4edda" : "#f8d7da");
+                                color: @(Model.Message.Contains("успешно") ? "#155724" : "#721c24");
+                                border: 1px solid @(Model.Message.Contains("успешно") ? "#c3e6cb" : "#f5c6cb");">
+                        @Model.Message
+                    </div>
+                }
+
+                <form method="post" asp-page-handler="AddToCart">
+                    <input type="hidden" name="productId" value="@Model.product.ProductId" />
+                    <input type="hidden" name="quantity" id="quantityInput" value="1" />
+                    <button type="submit" id="addToCartBtn" class="a-btn a-btn-add-to-cart" style="width: 100%;">
+                        🛒 Добавить в корзину
+                    </button>
+                </form>
+
+                <p id="stockMessage" style="margin: 10px 0 0 0; font-size: 12px; color: #666; text-align: center;"></p>
+            </div>
+
             <p class="list">Характеристики</p>
             <ul>
-                <li class=" ulmy">  <div class="ulmy flex-container "><div class="list flex-item-ul">Продукт</div><div class="list flex-item-ul">Кондиционер для волос</div></div></li>
-                <li class="ulmy"><div class="ulmy flex-container "> <div class="list flex-item-ul">Объем, мл</div><div class="list flex-item-ul">200</div></div></li>
-                <li class="ulmy"> <div class="ulmy flex-container "><div class="list flex-item-ul">Категория</div><div class="list flex-item-ul">Уход за волосами</div></div></li>
-                <li class="ulmy"> <div class="ulmy flex-container "><div class="list flex-item-ul">Страна производстват</div><div class="list flex-item-ul">Израиль</div></div></li>
-                <li class="ulmy"> <div class="ulmy flex-container "><div class="list flex-item-ul">Для кого</div><div class="list flex-item-ul">мужчин и женщин</div></div></li
+                <li class="ulmy">
+                    <div class="ulmy flex-container">
+                        <div class="list flex-item-ul">Продукт</div>
+                        <div class="list flex-item-ul">Кондиционер для волос</div>
+                    </div>
+                </li>
+                <li class="ulmy">
+                    <div class="ulmy flex-container">
+                        <div class="list flex-item-ul">Объем, мл</div>
+                        <div class="list flex-item-ul">200</div>
+                    </div>
+                </li>
+                <li class="ulmy">
+                    <div class="ulmy flex-container">
+                        <div class="list flex-item-ul">Категория</div>
+                        <div class="list flex-item-ul">Уход за волосами</div>
+                    </div>
+                </li>
+                <li class="ulmy">
+                    <div class="ulmy flex-container">
+                        <div class="list flex-item-ul">Страна производства</div>
+                        <div class="list flex-item-ul">Израиль</div>
+                    </div>
+                </li>
+                <li class="ulmy">
+                    <div class="ulmy flex-container">
+                        <div class="list flex-item-ul">Для кого</div>
+                        <div class="list flex-item-ul">Мужчин и женщин</div>
+                    </div>
+                </li>
             </ul>
-           
         </div>
 
-        <div class="grid-item roundl" >
+        <div class="grid-item roundl">
             <div class="flex-container" style="flex-direction:column ; justify-content:space-evenly">
                 <div class="flex-item-center">
-                    <a href=https://www.dior.com />
-                    <img class="baner" src="~/images/Dior_Logo.png">
-
+                    <a href="https://www.dior.com">
+                        <img class="baner" src="~/images/Dior_Logo.png">
+                    </a>
                 </div>
                 <div class="flex-item-center">
-                    <a href=https://www.versace.ru />
-                    <img class="baner" src="~/images/Versace.jpg">
-
+                    <a href="https://www.versace.ru">
+                        <img class="baner" src="~/images/Versace.jpg">
+                    </a>
                 </div>
                 <div class="flex-item-center">
-                    <a href=https://www.dove.com/us/en/home.html>
+                    <a href="https://www.dove.com/us/en/home.html">
                         <img class="baner" src="~/images/dove.jpg">
                     </a>
                 </div>
-
             </div>
         </div>
-
     </div>
 
-    <div class="base head roundl" >
+    <div class="base head roundl">
         <p class="HeaderText text" style="height:35px; margin:0; padding:5px">© 2025 РИВ ГОШ. Все права защищены.</p>
         <p class="HeaderText text" style="height:35px; margin:0; padding:5px">Телефон: 8 (800) 2344460 | shopadmin@rivegauche.ru</p>
     </div>
 
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const decreaseBtn = document.getElementById('decreaseBtn');
+            const increaseBtn = document.getElementById('increaseBtn');
+            const quantitySpan = document.getElementById('quantity');
+            const quantityInput = document.getElementById('quantityInput');
+            const stockCount = document.getElementById('stockCount');
+            const stockMessage = document.getElementById('stockMessage');
+            const addToCartBtn = document.getElementById('addToCartBtn');
 
+            let currentQuantity = 1;
+            const maxStock = parseInt(stockCount.textContent);
+
+            function updateQuantity() {
+                quantitySpan.textContent = currentQuantity;
+                quantityInput.value = currentQuantity;
+
+                if (currentQuantity > maxStock) {
+                    stockMessage.textContent = 'Недостаточно товара на складе';
+                    stockMessage.style.color = '#ff4444';
+                    addToCartBtn.disabled = true;
+                    addToCartBtn.style.opacity = '0.6';
+                    addToCartBtn.style.cursor = 'not-allowed';
+                } else {
+                    stockMessage.textContent = `Можно добавить до ${maxStock} шт.`;
+                    stockMessage.style.color = '#28a745';
+                    addToCartBtn.disabled = false;
+                    addToCartBtn.style.opacity = '1';
+                    addToCartBtn.style.cursor = 'pointer';
+                }
+
+                decreaseBtn.disabled = currentQuantity <= 1;
+                increaseBtn.disabled = currentQuantity >= maxStock;
+
+                decreaseBtn.style.opacity = currentQuantity <= 1 ? '0.5' : '1';
+                increaseBtn.style.opacity = currentQuantity >= maxStock ? '0.5' : '1';
+            }
+
+            decreaseBtn.addEventListener('click', function () {
+                if (currentQuantity > 1) {
+                    currentQuantity--;
+                    updateQuantity();
+                }
+            });
+
+            increaseBtn.addEventListener('click', function () {
+                if (currentQuantity < maxStock) {
+                    currentQuantity++;
+                    updateQuantity();
+                }
+            });
+
+            updateQuantity();
+        });
+    </script>
 </body>
 </html>

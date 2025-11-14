@@ -5,13 +5,14 @@ using WEBlaba2.Services;
 
 namespace WEBlaba2.Pages
 {
-    public class IndexModel : AuthPageModel
+    public class ProfileModel : AuthPageModel
     {
         public bool IsAuthenticated { get; set; }
         public string UserName { get; set; }
-
+        
+        public Client client {  get; set; }
         private readonly ClientService _authService;
-        public IndexModel(SessionService sessionService, ClientService authService) : base(sessionService)
+        public ProfileModel(SessionService sessionService, ClientService authService) : base(sessionService)
         {
             _authService = authService;
         }
@@ -27,6 +28,7 @@ namespace WEBlaba2.Pages
             if (IsAuthenticated)
             {
                 UserName = _sessionService.GetCurrentUserName();
+                client = _sessionService.GetCurrentUser();
             }
 
             return Page();
@@ -61,3 +63,7 @@ namespace WEBlaba2.Pages
         }
     }
 }
+
+
+
+

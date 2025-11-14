@@ -7,6 +7,7 @@
 <head>
     <title>Рив-Гош</title>
     <link rel="stylesheet" href="~/styles/Stylescss.css" />
+    <link rel="stylesheet" href="~/styles/buttons.css" />
 </head>
 <body class="menu">
     <div class="base header roundl">
@@ -14,29 +15,85 @@
             <div class="grid-item-center"><img style="width:150px" src="images/logo.png"></div>
             <div class="grid-item-center"><h1>РИВ ГОШ</h1></div>
             <div class="grid-item-center" bgcolor="#ffbb34">
-                <div class="flex-container roundlauth" style=" width:100%; height:100%; flex-direction:column ; justify-content:space-evenly">
-                    <div style="gap: 15px; padding: 0 10px;" class="flex-container">
-                        <div class="flex-item" style="width: 60px; text-align: right; flex: none;">логин: </div>
-                        <div class="flex-item"><input type="text"></div>
+                @if (!Model.IsAuthenticated)
+                {
+                    <!-- Блок авторизации для НЕавторизованных пользователей -->
+                    <form method="post" asp-page="/auth/Authorization">
+                        <input type="hidden" name="returnUrl" value="@(ViewContext.HttpContext.Request.Path + ViewContext.HttpContext.Request.QueryString)" />
+                        <div class="flex-container roundlauth" style="background: #ffbb34; width:100%; height:100%; flex-direction:column ; justify-content:space-evenly">
+                            <div style="gap: 15px; padding: 0 10px;" class="flex-container">
+                                <div class="flex-item" style="width: 60px; text-align: right; flex: none;">логин: </div>
+                                <div class="flex-item">
+                                    <input type="text" name="LoginData.Login" placeholder="Email">
+                                </div>
+                            </div>
+                            <div style="gap: 15px; padding: 0 10px;" class="flex-container">
+                                <div class="flex-item" style="width: 60px; text-align: right; flex: none;">пароль: </div>
+                                <div class="flex-item">
+                                    <input type="password" name="LoginData.Password" placeholder="Пароль">
+                                </div>
+                            </div>
+                            <div class="flex-container">
+                                <button type="submit" class="flex-item" style="margin: 0 3px; padding: 3px 6px; font-size:14px;border-radius: 6px; margin-bottom: 5px;">войти</button>
+                                <button type="button" id="registerBtn" class="flex-item" style="margin: 0 3px; padding: 3px 6px; font-size:14px;border-radius: 6px; margin-bottom: 5px;">Зарегистрироваться</button>
+                            </div>
+
+                            <script>
+                                document.getElementById('registerBtn').addEventListener('click', function() {
+                                    window.location.href = '/auth/registration';
+                                });
+                            </script>
+
+                        </div>
+                    </form>
+                }
+                else
+                {
+                    <!-- Блок приветствия для авторизованных пользователей -->
+                    <div class="flex-container roundlauth" style="background: #ffbb34; width:100%; height:100%; flex-direction:column ; justify-content:space-evenly; align-items:center;">
+                        <div style="text-align: center;">
+                            <div>Добро пожаловать!</div>
+                            <div><strong>@Model.UserName</strong></div>
+                        </div>
+                        <div class="flex-container" style="justify-content:center; gap: 10px;">
+                            <a asp-page="/Profile" class="btn-profile">Профиль</a>
+                            <a asp-page="/Logout"
+                               asp-route-returnUrl="@(ViewContext.HttpContext.Request.Path + ViewContext.HttpContext.Request.QueryString)"
+                               class="btn-logout">
+                                Выйти
+                            </a>
+                        </div>
                     </div>
-                    <div style="gap: 15px; padding: 0 10px;" class="flex-container">
-                        <div class="flex-item" style="width: 60px; text-align: right; flex: none;">пароль: </div>
-                        <div class="flex-item"><input type="password"></div>
-                    </div>
-                    <div class="flex-container" style="justify-content:center">
-                        <input type="submit" value="войти" />
-                    </div>
-                </div>
+                }
             </div>
         </div>
     </div>
+    
 
-    <div class="flex-container-razdels base" height="35">
-        <div class="flex-item-center"> <A href="#">Раздел 1</A> </div>
-        <div class="flex-item-center"> <A href="#">Раздел 2</A></div>
-        <div class="flex-item-center"> <A href="#">Раздел 3</A></div>
-        <div class="flex-item-center"> <A href="#">Раздел 4</A> </div>
+    <div class="flex-container-razdels base" style="margin-top:5px;"height="35">
+        <div class="flex-item-center">
+            <a asp-page="/Catalog"
+               asp-route-category="Все"
+               class="a-btn-primary @(Model.Category == "Все" ? "active-category" : "")">Все</a>
+        </div>
+        <div class="flex-item-center">
+            <a asp-page="/Catalog"
+               asp-route-category="Парфюмерия"
+               class="a-btn-primary @(Model.Category == "Парфюмерия" ? "active-category" : "")">Парфюмерия</a>
+        </div>
+        <div class="flex-item-center">
+            <a asp-page="/Catalog"
+               asp-route-category="Косметика"
+               class="a-btn-primary @(Model.Category == "Косметика" ? "active-category" : "")">Косметика</a>
+        </div>
+        <div class="flex-item-center">
+            <a asp-page="/Catalog"
+               asp-route-category="Уход"
+               class="a-btn-primary @(Model.Category == "Уход" ? "active-category" : "")">Уход</a>
+        </div>
+        
     </div>
+
 
     <div class="grid-container-main base ">
         <div class="grid-item sidebar-menu">
@@ -75,64 +132,44 @@
                                class="search-input"
                                placeholder="Введите название товара..."
                                name="searchQuery"
+                               value="@Model.SearchQuery"
                                required>
+                        <input type="hidden" name="category" value="@Model.Category" />
                         <button type="submit" class="search-btn">
                             <span class="search-icon">🔍</span>
                             Поиск
                         </button>
                     </div>
                 </form>
+                @if (Model.IsAuthenticated)
+                {
+                    <br/>
+                    <a href="/Cart" class="a-btn-primary">Корзина 🛒</a>
+                }
+                @if (!string.IsNullOrEmpty(Model.SearchMessage))
+                {
+                    <div class="search-message">
+                        @Model.SearchMessage
+                    </div>
+                }
             </div>
-           <div class="flex-container-catalog">
-                <a class="flex-item-catalog" asp-page="catalog/Issey_Miyake_Le_Sel">
-                <div>
-                    <h3><img src="imagesCatalog/Issey Miyake Le Sel D'issey Eau de Toilette.jpg" class="img-catalog"><br></h3>
-                    <h3>Issey Miyake Le Sel D'issey Eau de Toilette</h3>
-                    <p>Туалетная вода | 50 мл</p>
-                    <p>5790 ₽</p>
-                </div>    
-                </a>
-                <a class="flex-item-catalog" asp-page="catalog/Banderas_The_Icon_Woman">
-                <div>
-                    <h3><img src="imagesCatalog/Banderas-The-Icon-Woman-Eau-de-Parfum.jpg" class="img-catalog"><br></h3>
-                    <h3>Banderas The Icon Woman Eau de Parfum</h3>
-                    <p>Парфюмерная вода | 50 мл</p>
-                    <p>3191 ₽</p>
-                </div>
-                </a>
-                <a class="flex-item-catalog" asp-page="catalog/Love_Generation_Blushberry_Contouring">
-                <div >
-                    <h3><img src="imagesCatalog/Love Generation Blushberry Contouring Palette (2).jpg" class="img-catalog"><br></h3>
-                    <h3>Love Generation Blushberry Contouring Palette</h3>
-                    <p>Компактные румяна и скульптор для лица | 1 Коричневый, персиковый</p>
-                    <p>527 ₽</p>
-                </div>
-                </a>
-                <a class="flex-item-catalog" asp-page="catalog/Emi_Ultra_Strong_Nail">
-                <div >
-                    <h3><img src="imagesCatalog/Emi Ultra Strong Nail Polish Gel Effect.jpg" class="img-catalog"><br></h3>
-                    <h3>Emi Ultra Strong Nail Polish Gel Effect</h3>
-                    <p>Ультрастойкий лак для ногтей с гелевым эффектом | 1 Снежно-белый</p>
-                    <p>499 ₽</p>
-                </div>
-                </a>
-                <a class="flex-item-catalog" asp-page="catalog/Caudalie_Vinohydra_Sorbet_Cream">
-                <div >
-                    <h3><img src="imagesCatalog/Caudalie Vinohydra Sorbet Cream Set Xmas.jpg" class="img-catalog"><br></h3>
-                    <h3>Caudalie Vinohydra Sorbet Cream Set Xmas</h3>
-                    <p>Набор для увлажняющего ухода за кожей лицаа</p>
-                    <p>2145 ₽</p>
-                </div>
-                </a>
-                <a class="flex-item-catalog" asp-page="catalog/Alan_Hadash_Brazilian_Murumuru">
-                <div>
-                    <h3><img src="imagesCatalog/Alan Hadash Brazilian Murumuru Hair Сonditioner.jpg" class="img-catalog"><br></h3>
-                    <h3>Alan Hadash Brazilian Murumuru Hair Сonditioner</h3>
-                    <p>Кондиционер для окрашенных и жестких волос | 200 мл</p>
-                    <p>719 ₽</p>
-                </div>
-                </a>
-           </div>
+<!--ВЫДАЧА-->
+            <div class="flex-container-catalog">
+                @foreach (var product in Model.Products)
+                {
+                    <a class="flex-item-catalog" asp-page="@product.PageUrl">
+                        <div>
+                            <h3><img src="@product.ImageUrl" class="img-catalog" alt="@product.Name"><br></h3>
+                            <h3>@product.Name</h3>
+                            <p>@product.Price.ToString("N0") ₽</p>
+                            <p class="product-category">Категория: @product.Category</p>
+                        </div>
+                    </a>
+                }
+            </div>
+
+
+
 
         </div>
 

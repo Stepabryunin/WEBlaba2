@@ -1,0 +1,132 @@
+﻿@page
+@model WEBlaba2.Pages.CartModel
+@{
+    ViewData["Title"] = "Корзина";
+}
+<!DOCTYPE html>
+<html>
+<head>
+
+    <title>Рив-Гош</title>
+    <link rel="stylesheet" href="~/styles/Stylescss.css" />
+    <link rel="stylesheet" href="~/styles/stylesCart.css" />
+    <link rel="stylesheet" href="~/styles/buttons.css" />
+
+</head>
+<body>
+    <div class="roundl base header">
+        <div class="grid-container-head">
+            <div class="grid-item-center"><img style="width:150px" src="images/logo.png"></div>
+            <div class="grid-item-center"><h1>РИВ ГОШ</h1></div>
+            
+        </div>
+    </div>
+
+<div class="grid-container-main base ">
+        <div class="grid-item sidebar-menu">
+            <div class="menu-container">
+                <nav class="navigation-menu">
+                    <a asp-page="/Index" class="nav-link">
+                        <span class="nav-icon">🏠</span>
+                        <span class="nav-text">Главная</span>
+                    </a>
+                    <a asp-page="/Catalog" class="nav-link">
+                        <span class="nav-icon">📦</span>
+                        <span class="nav-text">Каталог</span>
+                    </a>
+                    <a asp-page="/contacts" class="nav-link">
+                        <span class="nav-icon">📞</span>
+                        <span class="nav-text">Контакты</span>
+                    </a>
+                    <a asp-page="/aboutme" class="nav-link">
+                        <span class="nav-icon">ℹ️</span>
+                        <span class="nav-text">О нас</span>
+                    </a>
+                </nav>
+
+
+
+            </div>
+        </div>
+        <div class="container menu">
+            <h1 style="text-align:center">Корзина покупок</h1>
+
+        @if (Model.CartItems.Any())
+        {
+            <div class="cart-items">
+                @foreach (var item in Model.CartItems)
+                {
+                    <div class="cart-item">
+                        <img src="@item.Product.ImageUrl" alt="@item.Product.Name" class="cart-item-image">
+                        <div class="cart-item-details">
+                            <h3>@item.Product.Name</h3>
+                            <p class="price">@item.Product.Price.ToString("N0") ₽</p>
+                        </div>
+                        <div class="cart-item-quantity">
+                            <form method="post" asp-page-handler="UpdateQuantity">
+                                <input type="hidden" name="cartItemId" value="@item.CartItemId" />
+                                <button type="submit" name="quantity" value="@(item.Quantity - 1)">-</button>
+                                <span>@item.Quantity</span>
+                                <button type="submit" name="quantity" value="@(item.Quantity + 1)">+</button>
+                            </form>
+                        </div>
+                        <div class="cart-item-total">
+                            @((item.Product.Price * item.Quantity).ToString("N0")) ₽
+                        </div>
+                        <form method="post" asp-page-handler="RemoveFromCart">
+                            <input type="hidden" name="cartItemId" value="@item.CartItemId" />
+                            <button type="submit" class="btn-remove">Удалить</button>
+                        </form>
+                    </div>
+                }
+            </div>
+
+
+            <div class="cart-summary">
+                <div class="cart-total">
+                    <h3>Итого: @Model.CartTotal.ToString("N0") ₽</h3>
+                </div>
+                    <div class="cart-actions flex-container-razdels">
+                    <form method="post" asp-page-handler="ClearCart">
+                        <button type="submit" class="btn-clear">Очистить корзину</button>
+                    </form>
+                    <a href="/Checkout" class="btn-checkout">Оформить заказ</a>
+                </div>
+            </div><br/>
+        }
+        else
+        {
+            <div class="empty-cart">
+                <h2>Корзина пуста</h2>
+                <p>Добавьте товары из каталога</p>
+                    <a href="/Catalog" class="a-btn-primary">Продолжить покупки</a>
+            </div>
+        }
+    </div>
+        <div class="grid-item sidebar-menu">
+            <div class="flex-container" style="flex-direction:column ; justify-content:space-evenly">
+                <div class="flex-item-center">
+                    <a href=https://www.dior.com />
+                    <img class="baner" src="images/Dior_Logo.png">
+
+                </div>
+                <div class="flex-item-center">
+                    <a href=https://www.versace.ru />
+                    <img class="baner" src="images/Versace.jpg">
+
+                </div>
+                <div class="flex-item-center">
+                    <a href=https://www.dove.com/us/en/home.html>
+                        <img class="baner" src="images/dove.jpg">
+                    </a>
+                </div>
+
+            </div>
+        </div>
+</div>
+    <div class="roundl base head ">
+        <p class="HeaderText" style="height:35px; margin:0; padding:5px">© 2025 РИВ ГОШ. Все права защищены.</p>
+        <p class="HeaderText" style="height:35px; margin:0; padding:5px">Телефон: 8 (800) 2344460 | shopadmin@rivegauche.ru</p>
+    </div>
+</body>
+</html> 

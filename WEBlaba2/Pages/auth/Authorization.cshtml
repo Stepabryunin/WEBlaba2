@@ -3,7 +3,6 @@
 @{
 }
 
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -11,21 +10,13 @@
     <link href="~/styles/stylescss.css" rel="stylesheet" />
 </head>
 <body class="menuCatalog">
-    <div  class="base header roundl">
+    <div class="base header roundl">
         <div class="grid-container-head-auth">
             <div class="grid-item-center"><img style="width:150px" src="~/images/logo.png"></div>
             <div class="grid-item-center"><h1>РИВ ГОШ</h1></div>
             <div class="grid-item-center" bgcolor="#ffbb34">
-                
             </div>
         </div>
-    </div>
-
-    <div class="flex-container-razdels base" height="35">
-        <div class="flex-item-center"> <A href="#">Раздел 1</A> </div>
-        <div class="flex-item-center"> <A href="#">Раздел 2</A></div>
-        <div class="flex-item-center"> <A href="#">Раздел 3</A></div>
-        <div class="flex-item-center"> <A href="#">Раздел 4</A> </div>
     </div>
 
     <div class="grid-container-main base ">
@@ -49,25 +40,47 @@
                         <span class="nav-text">О нас</span>
                     </a>
                 </nav>
-
-
-
             </div>
         </div>
 
         <div class="grid-item menu">
             <h3>Вход в аккаунт</h3>
+
+            <!-- Блок для отображения сообщений об ошибках -->
+            @if (!string.IsNullOrEmpty(Model.Message))
+            {
+                <div class="alert alert-error">
+                    @Model.Message
+                </div>
+            }
+
+            <!-- Блок для отображения ошибок валидации -->
+            @if (!ViewData.ModelState.IsValid)
+            {
+                <div class="alert alert-error">
+                    @foreach (var error in ViewData.ModelState.Values.SelectMany(v => v.Errors))
+                    {
+                        if (error.ErrorMessage != "The ReturnUrl field is required.")
+                        {<p>@error.ErrorMessage</p>}
+                        
+                    }
+                </div>
+            }
+
             <form class="auth-form" method="post">
+                <input type="hidden" name="ReturnUrl" value="@Model.ReturnUrl" />
+
                 <div class="form-group full-width">
                     <label for="login">Логин или Email *</label>
-                    <input type="text" id="login" name="login" required placeholder="Введите ваш логин или email">
+                    <input type="text" asp-for="LoginData.Login" name="login" required placeholder="Введите ваш логин или email">
+                    <span asp-validation-for="LoginData.Login" class="text-danger"></span>
                 </div>
 
                 <div class="form-group full-width">
                     <label for="password">Пароль *</label>
-                    <input type="password" id="password" name="password" required placeholder="Введите ваш пароль">
+                    <input type="password" asp-for="LoginData.Password" name="password" required placeholder="Введите ваш пароль">
+                    <span asp-validation-for="LoginData.Password" class="text-danger"></span>
                 </div>
-
 
                 <div class="form-group full-width">
                     <button type="submit" class="submit-btn">Войти</button>
@@ -76,8 +89,6 @@
                 <div class="form-links">
                     <p>Нет аккаунта? <a asp-page="/auth/registration">Зарегистрироваться</a></p>
                 </div>
-
-                
             </form>
         </div>
 
@@ -85,12 +96,12 @@
             <div class="flex-container" style="flex-direction:column ; justify-content:space-evenly">
                 <div class="flex-item-center">
                     <a href="https://www.dior.com">
-                    <img class="baner" src="~/images/Dior_Logo.png">
+                        <img class="baner" src="~/images/Dior_Logo.png">
                     </a>
                 </div>
                 <div class="flex-item-center">
                     <a href="https://www.versace.ru">
-                    <img class="baner" src="~/images/Versace.jpg">
+                        <img class="baner" src="~/images/Versace.jpg">
                     </a>
                 </div>
                 <div class="flex-item-center">
@@ -102,7 +113,7 @@
         </div>
     </div>
 
-    <div class="base head roundl" >
+    <div class="base head roundl">
         <p class="HeaderText text" style="height:35px; margin:0; padding:5px">© 2025 РИВ ГОШ. Все права защищены.</p>
         <p class="HeaderText text" style="height:35px; margin:0; padding:5px">Телефон: 8 (800) 2344460 | shopadmin@rivegauche.ru</p>
     </div>

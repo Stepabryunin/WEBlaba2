@@ -1,0 +1,116 @@
+﻿@page
+@model WEBlaba2.Pages.ProfileModel
+@{
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Рив-Гош</title>
+    <link rel="stylesheet" href="~/styles/Stylescss.css" />
+   <link rel="stylesheet" href="~/styles/buttons.css" />
+</head>
+<body class="menu">
+    <div class="roundl base header">
+        <div class="grid-container-head">
+            <div class="grid-item-center" ><img style="width:150px"  src="images/logo.png"></div>
+            <div class="grid-item-center"><h1>РИВ ГОШ</h1></div>
+            <div class="grid-item-center"  bgcolor="#ffbb34">
+                
+            </div>
+        </div>
+    </div>
+
+
+ 
+
+   <div class="grid-container-main base ">
+        <div class="grid-item sidebar-menu">
+            <div class="menu-container">
+                <nav class="navigation-menu">
+                    <a asp-page="/Index" class="nav-link">
+                        <span class="nav-icon">🏠</span>
+                        <span class="nav-text">Главная</span>
+                    </a>
+                    <a asp-page="/Catalog" class="nav-link">
+                        <span class="nav-icon">📦</span>
+                        <span class="nav-text">Каталог</span>
+                    </a>
+                    <a asp-page="/contacts" class="nav-link">
+                        <span class="nav-icon">📞</span>
+                        <span class="nav-text">Контакты</span>
+                    </a>
+                    <a asp-page="/aboutme" class="nav-link">
+                        <span class="nav-icon">ℹ️</span>
+                        <span class="nav-text">О нас</span>
+                    </a>
+                </nav>
+
+          
+                
+            </div>
+        </div>
+
+       <div class="grid-item">
+
+           @if (Model.IsAuthenticated)
+            {
+                <div class="menu">
+                <h2 style="text-align:center;"> Ваш профиль</h2> 
+                <p class="menu">Фамилия: @Model.client.LastName </p>
+                <p class="menu">Имя: @Model.client.FirstName </p>
+                <p class="menu">Отчество: @Model.client.MiddleName </p>
+                <p class="menu">Email адрес: @Model.client.Email </p>
+                <p class="menu">Номер телефона: @Model.client.Phone </p>
+                    <br />
+                    <a href="/Cart" class="a-btn-primary">Корзина 🛒</a>
+                <a asp-page="/Logout"
+                   asp-route-returnUrl="@(ViewContext.HttpContext.Request.Path + ViewContext.HttpContext.Request.QueryString)"
+                       class="a-btn a-btn-logout">
+                    Выйти
+                </a>
+                </div>
+            } else
+            {
+                <div class="menu">
+                    <div style="text-align: center;">
+                        <h2>Добро пожаловать!</h2>
+                        <p>Вы можете войти в свой аккаунт или зарегестрироваться.</p>
+                    </div>
+                    <div class="a-btn-group" style="justify-content:center; gap: 10px;">
+                        <a asp-page="/auth/Authorization" class="a-btn a-btn-primary">Войти</a>
+                        <a asp-page="/auth/registration" class="btn-clear a-btn-secondary">Регистрация</a>
+                    </div>
+                </div>
+            }
+        </div>
+        <div class="grid-item sidebar-menu">
+            <div class="flex-container" style="flex-direction:column ; justify-content:space-evenly">
+                <div class="flex-item-center">
+                    <a href=https://www.dior.com/>
+                    <img class="baner" src="images/Dior_Logo.png">
+                    
+               </div>
+                <div class="flex-item-center">
+                    <a href=https://www.versace.ru/>
+                    <img class="baner" src="images/Versace.jpg">
+                    
+                </div>
+                <div class="flex-item-center">
+                    <a href=https://www.dove.com/us/en/home.html>
+                        <img class ="baner" src="images/dove.jpg" >
+                    </a>
+                </div>
+
+           </div>
+       </div>
+
+   </div>
+
+    <div class="roundl base head ">
+        <p class="HeaderText" style="height:35px; margin:0; padding:5px">© 2025 РИВ ГОШ. Все права защищены.</p>
+        <p class="HeaderText" style="height:35px; margin:0; padding:5px">Телефон: 8 (800) 2344460 | shopadmin@rivegauche.ru</p>
+    </div>
+
+
+</body>
+</html> 

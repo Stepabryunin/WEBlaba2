@@ -14,29 +14,62 @@
             <div class="grid-item-center"><img style="width:150px" src="images/logo.png"></div>
             <div class="grid-item-center"><h1>РИВ ГОШ</h1></div>
             <div class="grid-item-center" bgcolor="#ffbb34">
-                <div class="flex-container roundlauth" style=" width:100%; height:100%; flex-direction:column ; justify-content:space-evenly">
-                    <div style="gap: 15px; padding: 0 10px;" class="flex-container">
-                        <div class="flex-item" style="width: 60px; text-align: right; flex: none;">логин: </div>
-                        <div class="flex-item"><input type="text"></div>
+
+                @if (!Model.IsAuthenticated)
+                {
+                    <!-- Блок авторизации для НЕавторизованных пользователей -->
+                    <form method="post" asp-page="/auth/Authorization">
+                        <input type="hidden" name="returnUrl" value="@(ViewContext.HttpContext.Request.Path + ViewContext.HttpContext.Request.QueryString)" />
+                        <div class="flex-container roundlauth" style="background: #ffbb34; width:100%; height:100%; flex-direction:column ; justify-content:space-evenly">
+                            <div style="gap: 15px; padding: 0 10px;" class="flex-container">
+                                <div class="flex-item" style="width: 60px; text-align: right; flex: none;">логин: </div>
+                                <div class="flex-item">
+                                    <input type="text" name="LoginData.Login" placeholder="Email">
+                                </div>
+                            </div>
+                            <div style="gap: 15px; padding: 0 10px;" class="flex-container">
+                                <div class="flex-item" style="width: 60px; text-align: right; flex: none;">пароль: </div>
+                                <div class="flex-item">
+                                    <input type="password" name="LoginData.Password" placeholder="Пароль">
+                                </div>
+                            </div>
+                            <div class="flex-container">
+                                <button type="submit" class="flex-item" style="margin: 0 3px; padding: 3px 6px; font-size:14px;border-radius: 6px; margin-bottom: 5px;">войти</button>
+                                <button type="button" id="registerBtn" class="flex-item" style="margin: 0 3px; padding: 3px 6px; font-size:14px;border-radius: 6px; margin-bottom: 5px;">Зарегистрироваться</button>
+                            </div>
+
+                            <script>
+                                document.getElementById('registerBtn').addEventListener('click', function() {
+                                    window.location.href = '/auth/registration';
+                                });
+                            </script>
+
+                        </div>
+                    </form>
+                }
+                else
+                {
+                    <!-- Блок приветствия для авторизованных пользователей -->
+                    <div class="flex-container roundlauth" style="background: #ffbb34; width:100%; height:100%; flex-direction:column ; justify-content:space-evenly; align-items:center;">
+                        <div style="text-align: center;">
+                            <div>Добро пожаловать!</div>
+                            <div><strong>@Model.UserName</strong></div>
+                        </div>
+                        <div class="flex-container" style="justify-content:center; gap: 10px;">
+                            <a asp-page="/Profile" class="btn-profile">Профиль</a>
+                            <a asp-page="/Logout"
+                               asp-route-returnUrl="@(ViewContext.HttpContext.Request.Path + ViewContext.HttpContext.Request.QueryString)"
+                               class="btn-logout">
+                                Выйти
+                            </a>
+                        </div>
                     </div>
-                    <div style="gap: 15px; padding: 0 10px;" class="flex-container">
-                        <div class="flex-item" style="width: 60px; text-align: right; flex: none;">пароль: </div>
-                        <div class="flex-item"><input type="password"></div>
-                    </div>
-                    <div class="flex-container" style="justify-content:center">
-                        <input type="submit" value="войти" />
-                    </div>
-                </div>
+                }
             </div>
         </div>
     </div>
 
-    <div class="flex-container-razdels base" height="35">
-        <div class="flex-item-center"> <A href="#">Раздел 1</A> </div>
-        <div class="flex-item-center"> <A href="#">Раздел 2</A></div>
-        <div class="flex-item-center"> <A href="#">Раздел 3</A></div>
-        <div class="flex-item-center"> <A href="#">Раздел 4</A> </div>
-    </div>
+ 
 
     <div class="grid-container-main base ">
         <div class="grid-item sidebar-menu">
