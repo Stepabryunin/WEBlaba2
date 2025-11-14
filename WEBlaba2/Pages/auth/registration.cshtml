@@ -8,6 +8,7 @@
 <head>
     <title>Рив-Гош</title>
     <link href="~/styles/stylescss.css" rel="stylesheet" />
+    <link href="~/styles/modal.css" rel="stylesheet" />
 </head>
 <body class="menuCatalog">
     <div class="roundl base header">
@@ -46,14 +47,12 @@
         <div class="grid-item menu">
             <h3>Регистрация</h3>
 
-
             @if (!string.IsNullOrEmpty(Model.Message))
             {
                 <div class="alert alert-error">
                     @Model.Message
                 </div>
             }
-
 
             @if (!ViewData.ModelState.IsValid)
             {
@@ -116,7 +115,7 @@
                         <label class="checkbox-label">
                             <input type="checkbox" id="agreeOferta" name="agreeOferta" required>
                             <span class="checkmark"></span>
-                            Я согласен(а) с <a href="~/documents/oferta.pdf" target="_blank" class="agreement-link">офертой</a> *
+                            Я согласен(а) с <a href="#" class="agreement-link" data-document="oferta.pdf" data-title="Публичная оферта">офертой</a> *
                         </label>
                     </div>
 
@@ -124,7 +123,7 @@
                         <label class="checkbox-label">
                             <input type="checkbox" id="agreePrivacy" name="agreePrivacy" required>
                             <span class="checkmark"></span>
-                            Я согласен(а) с <a href="~/documents/Политика обработки персональных данных.pdf" target="_blank" class="agreement-link">политикой обработки персональных данных</a> *
+                            Я согласен(а) с <a href="#" class="agreement-link" data-document="Политика обработки персональных данных.pdf" data-title="Политика обработки персональных данных">политикой обработки персональных данных</a> *
                         </label>
                     </div>
 
@@ -132,7 +131,7 @@
                         <label class="checkbox-label">
                             <input type="checkbox" id="agreeRules" name="agreeRules" required>
                             <span class="checkmark"></span>
-                            Я согласен(а) с <a href="~/documents/правила продажи.pdf" target="_blank" class="agreement-link">правилами продажи</a> *
+                            Я согласен(а) с <a href="#" class="agreement-link" data-document="правила продажи.pdf" data-title="Правила продажи">правилами продажи</a> *
                         </label>
                     </div>
                 </div>
@@ -168,9 +167,76 @@
         </div>
     </div>
 
+    <!-- Модальное окно для документов -->
+    <div id="documentModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <div class="modal-header">
+                <h2 class="modal-title" id="modalTitle">Документ</h2>
+            </div>
+            <iframe id="documentViewer" class="document-viewer" src=""></iframe>
+            <div class="modal-actions">
+                <a id="downloadLink" href="#" class="btn-download" download>Скачать документ</a>
+                <button class="btn-download" onclick="closeModal()">Закрыть</button>
+            </div>
+        </div>
+    </div>
+
     <div class="base head roundl">
         <p class="HeaderText text" style="height:35px; margin:0; padding:5px">© 2025 РИВ ГОШ. Все права защищены.</p>
         <p class="HeaderText text" style="height:35px; margin:0; padding:5px">Телефон: 8 (800) 2344460 | shopadmin@rivegauche.ru</p>
     </div>
+
+    <script>
+        // Получаем модальное окно
+        const modal = document.getElementById('documentModal');
+        const documentViewer = document.getElementById('documentViewer');
+        const downloadLink = document.getElementById('downloadLink');
+        const modalTitle = document.getElementById('modalTitle');
+        const closeBtn = document.querySelector('.close');
+
+        // Функция для открытия модального окна
+        function openModal(documentPath, documentName) {
+            const fullPath = '/documents/' + documentPath;
+            documentViewer.src = fullPath;
+            downloadLink.href = fullPath;
+            downloadLink.download = documentPath;
+            modalTitle.textContent = documentName;
+            modal.style.display = 'block';
+        }
+
+        // Функция для закрытия модального окна
+        function closeModal() {
+            modal.style.display = 'none';
+            documentViewer.src = '';
+        }
+
+        // Обработчики событий для ссылок на документы
+        document.querySelectorAll('.agreement-link').forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                const documentPath = this.getAttribute('data-document');
+                const documentTitle = this.getAttribute('data-title');
+                openModal(documentPath, documentTitle);
+            });
+        });
+
+        // Закрытие модального окна при клике на крестик
+        closeBtn.addEventListener('click', closeModal);
+
+        // Закрытие модального окна при клике вне его
+        window.addEventListener('click', function(e) {
+            if (e.target === modal) {
+                closeModal();
+            }
+        });
+
+        // Закрытие модального окна при нажатии Escape
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                closeModal();
+            }
+        });
+    </script>
 </body>
 </html>
