@@ -152,9 +152,60 @@
         </div>
     </div>
 
-    <div class="base head roundl" >
+    <div class="base head roundl ">
+        <p class="HeaderText text" style="height:35px; margin:0; padding:5px"><a style="color: #000000;" href="~/documents/oferta.pdf">Оферта</a>, <a style="color: #000000;" href="~/documents/Политика обработки персональных данных.pdf">Политика обработки персональных данных</a>, <a style="color: #000000;" href="~/documents/правила продажи.pdf">Правила продажи</a></p>
         <p class="HeaderText text" style="height:35px; margin:0; padding:5px">© 2025 РИВ ГОШ. Все права защищены.</p>
         <p class="HeaderText text" style="height:35px; margin:0; padding:5px">Телефон: 8 (800) 2344460 | shopadmin@rivegauche.ru</p>
+
     </div>
+
+    <script>
+
+        const modal = document.getElementById('documentModal');
+        const documentViewer = document.getElementById('documentViewer');
+        const downloadLink = document.getElementById('downloadLink');
+        const modalTitle = document.getElementById('modalTitle');
+        const closeBtn = document.querySelector('.close');
+
+
+        function openModal(documentPath, documentName) {
+            const fullPath = '/documents/' + documentPath;
+            documentViewer.src = fullPath;
+            downloadLink.href = fullPath;
+            downloadLink.download = documentPath;
+            modalTitle.textContent = documentName;
+            modal.style.display = 'block';
+        }
+
+        function closeModal() {
+            modal.style.display = 'none';
+            documentViewer.src = '';
+        }
+
+
+        document.querySelectorAll('.agreement-link').forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                const documentPath = this.getAttribute('data-document');
+                const documentTitle = this.getAttribute('data-title');
+                openModal(documentPath, documentTitle);
+            });
+        });
+
+        closeBtn.addEventListener('click', closeModal);
+
+        window.addEventListener('click', function(e) {
+            if (e.target === modal) {
+                closeModal();
+            }
+        });
+
+
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                closeModal();
+            }
+        });
+    </script>
 </body>
 </html>

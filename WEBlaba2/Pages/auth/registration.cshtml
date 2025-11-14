@@ -183,19 +183,24 @@
     </div>
 
     <div class="base head roundl">
+        <p class="HeaderText text" style="height:35px; margin:0; padding:5px;">
+            <a href="#" style=" color: #000000; text-decoration: none; cursor: pointer; transition: color 0.3s ease;"  class="agreement-link" data-document="oferta.pdf" data-title="Публичная оферта"> Оферта</a>,
+            <a href="#" style=" color: #000000; text-decoration: none; cursor: pointer; transition: color 0.3s ease;" class="agreement-link" data-document="Политика обработки персональных данных.pdf" data-title="Политика обработки персональных данных"> Политика обработки персональных данных</a>,
+            <a href="#" style=" color: #000000; text-decoration: none; cursor: pointer; transition: color 0.3s ease;" class="agreement-link" data-document="правила продажи.pdf" data-title=" Правила продажи">Правила продажи</a>
+        </p>
         <p class="HeaderText text" style="height:35px; margin:0; padding:5px">© 2025 РИВ ГОШ. Все права защищены.</p>
         <p class="HeaderText text" style="height:35px; margin:0; padding:5px">Телефон: 8 (800) 2344460 | shopadmin@rivegauche.ru</p>
     </div>
 
     <script>
-        // Получаем модальное окно
+
         const modal = document.getElementById('documentModal');
         const documentViewer = document.getElementById('documentViewer');
         const downloadLink = document.getElementById('downloadLink');
         const modalTitle = document.getElementById('modalTitle');
         const closeBtn = document.querySelector('.close');
 
-        // Функция для открытия модального окна
+
         function openModal(documentPath, documentName) {
             const fullPath = '/documents/' + documentPath;
             documentViewer.src = fullPath;
@@ -205,13 +210,12 @@
             modal.style.display = 'block';
         }
 
-        // Функция для закрытия модального окна
         function closeModal() {
             modal.style.display = 'none';
             documentViewer.src = '';
         }
 
-        // Обработчики событий для ссылок на документы
+
         document.querySelectorAll('.agreement-link').forEach(link => {
             link.addEventListener('click', function(e) {
                 e.preventDefault();
@@ -221,17 +225,15 @@
             });
         });
 
-        // Закрытие модального окна при клике на крестик
         closeBtn.addEventListener('click', closeModal);
 
-        // Закрытие модального окна при клике вне его
         window.addEventListener('click', function(e) {
             if (e.target === modal) {
                 closeModal();
             }
         });
 
-        // Закрытие модального окна при нажатии Escape
+
         document.addEventListener('keydown', function(e) {
             if (e.key === 'Escape') {
                 closeModal();
