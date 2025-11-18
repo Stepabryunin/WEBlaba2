@@ -34,6 +34,7 @@ namespace WEBlaba2.Pages
 
         public async Task<IActionResult> OnGetAsync()
         {
+            
             // Получаем все продукты
             var allProducts = _productService.GetAllProducts();
 

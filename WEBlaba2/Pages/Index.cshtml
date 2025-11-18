@@ -7,6 +7,10 @@
 <head>
     <title>Рив-Гош</title>
     <link rel="stylesheet" href="~/styles/Stylescss.css" />
+    <link href="~/styles/modal.css" rel="stylesheet" />
+    <link href="~/styles/slider.css" rel="stylesheet"/>
+    <script src="~/Scripts/slider.js" defer></script>
+    <script src="~/Scripts/Model.js" defer></script>
 </head>
 <body class="menu">
     <div class="roundl base header">
@@ -100,12 +104,29 @@
 
        <div class="grid-item">
            <div>
+
                 <h2 style="text-align:center;" > О нас</h2>
                 <img class="img-main " style="text-align:left;" src="images/Kosmetika.jpg" align="left">
                 <p class="menu">
                     Интернет магазин РИВ ГОШ является официальной точкой продажи всех представленных на сайте
                     парфюмерно-косметических брендов. Вся продукция представленная на сайте поставляется напрямую марками-производителями, которые гарантируют качество и сроки годности данного товара.
                 </p>
+                <br />
+                <div class="slider">
+                    <div class="item">
+                        <a asp-page="/catalog/Caudalie Vinopure Salicylic Spot Solution"><img src="~/imagesCatalog/Caudalie Vinopure Salicylic Spot Solution.jpg" /> </a>
+                    </div>
+                    <div class="item">
+                        <a asp-page="/catalog/Vivienne Sabo Premiere Grande Artistic Volume Mascara"><img src="~/imagesCatalog/Vivienne Sabo Premiere Grande Artistic Volume Mascara.jpg" /> </a>
+                    </div>
+                    <div class="item">
+                        <a asp-page="/catalog/Banderas Her Secret Pink Absolu Eau De Parfum"> <img src="~/imagesCatalog/Banderas Her Secret Pink Absolu Eau De Parfum.jpg"></a>
+                    </div>
+
+                    <!-- Кнопки ДОЛЖНЫ быть здесь -->
+                    <a class="previous" onclick="previousSlide()">&#10094;</a>
+                    <a class="next" onclick="nextSlide()">&#10095;</a>
+                </div>
                 <h3 align="center">Малая часть наших брендов:</h3>
                 <table border="3" cellpadding="10">
                     <tr>
@@ -179,13 +200,16 @@
 
    </div>
 
-<div class="base head roundl ">
-        <p class="HeaderText text" style="height:35px; margin:0; padding:5px"><a style="color: #000000;" href="~/documents/oferta.pdf">Оферта</a>, <a style="color: #000000;" href="~/documents/Политика обработки персональных данных.pdf">Политика обработки персональных данных</a>, <a style="color: #000000;" href="~/documents/правила продажи.pdf">Правила продажи</a></p>
+    <div class="base head roundl">
+        <p class="HeaderText text" style="height:35px; margin:0; padding:5px;">
+            <a href="#" style=" color: #000000; text-decoration: none; cursor: pointer; transition: color 0.3s ease;" class="agreement-link" data-document="oferta.pdf" data-title="Публичная оферта"> Оферта</a>,
+            <a href="#" style=" color: #000000; text-decoration: none; cursor: pointer; transition: color 0.3s ease;" class="agreement-link" data-document="Политика обработки персональных данных.pdf" data-title="Политика обработки персональных данных"> Политика обработки персональных данных</a>,
+            <a href="#" style=" color: #000000; text-decoration: none; cursor: pointer; transition: color 0.3s ease;" class="agreement-link" data-document="правила продажи.pdf" data-title=" Правила продажи">Правила продажи</a>
+        </p>
         <p class="HeaderText text" style="height:35px; margin:0; padding:5px">© 2025 РИВ ГОШ. Все права защищены.</p>
         <p class="HeaderText text" style="height:35px; margin:0; padding:5px">Телефон: 8 (800) 2344460 | shopadmin@rivegauche.ru</p>
-
     </div>
 
-
+    @await Html.PartialAsync("Model")
 </body>
 </html> 

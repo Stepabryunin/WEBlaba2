@@ -1,8 +1,7 @@
 ﻿@page
-@model WEBlaba2.Pages.catalog.Caudalie_Vinohydra_Sorbet_CreamModel
+@model WEBlaba2.Pages.catalog.Caudalie_Vinopure_Salicylic_Spot_SolutionModel
 @{
 }
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -41,7 +40,7 @@
                             </div>
 
                             <script>
-                                document.getElementById('registerBtn').addEventListener('click', function () {
+                                document.getElementById('registerBtn').addEventListener('click', function  () {
                                     window.location.href = '/auth/registration';
                                 });
                             </script>
@@ -96,25 +95,14 @@
         </div>
 
         <div class="grid-item">
-            <!-- Блок сообщений -->
-            @if (!string.IsNullOrEmpty(Model.Message))
-            {
-                <div class="@(Model.Message.Contains("успешно") ? "alert-success" : "alert-error")"
-                     style="margin: 15px 0; padding: 12px; border-radius: 6px; text-align: center;
-                            background: @(Model.Message.Contains("успешно") ? "#d4edda" : "#f8d7da");
-                            color: @(Model.Message.Contains("успешно") ? "#155724" : "#721c24");
-                            border: 1px solid @(Model.Message.Contains("успешно") ? "#c3e6cb" : "#f5c6cb");">
-                    @Model.Message
-                </div>
-            }
-
-            <img class="img-border" src="~/imagesCatalog/Caudalie Vinohydra Sorbet Cream Set Xmas.jpg" />
-            <h3 class="heading">Caudalie Vinohydra Sorbet Cream Set Xmas<br></h3>
-            <p class="shortDescription">Набор для увлажняющего ухода за кожей лица</p>
-            <p class="price" style="font-size: 24px; font-weight: bold; color: #ff8000;">2145 ₽</p>
+            <img class="img-border" style="object-fit: contain;" src="~/imagesCatalog/Caudalie Vinopure Salicylic Spot Solution.jpg" />
+            <h3 class="heading">Caudalie Vinopure Salicylic Spot Solution<br></h3>
+            <p class="shortDescription">Точечный крем против воспалений с салициловой кислотой и ниацинамидом</p>
+            <p class="price" style="font-size: 24px; font-weight: bold; color: #ff8000;">1 312 ₽</p>
             <p class="fullDescription">
-                Увлажняющий крем-сорбет для лица с виноградной водой VinoHydra Sorbet Cream Moisturizer 60 мл
-                Мягкий очищающий гель для сухой и чувствительной кожи лица с виноградной водой VinoHydra Moisturizing Cleansing Gel 30 мл
+                Точечный крем против несовершенств Vinopure существенно сокращает локальное воспаление за 4 часа*.
+                Подсушивает воспаления, уменьшает покраснения и маскирует их благодаря светло-зеленому оттенку текстуры.
+                * Клинические исследования среди 22 добровольных участниц по результатам самостоятельной оценки.
             </p><br />
 
             <!-- Блок с количеством и добавлением в корзину -->
@@ -127,6 +115,18 @@
                         <button type="button" id="increaseBtn" style="width: 35px; height: 35px; border: none; background: #ffbb34; border-radius: 50%; font-weight: bold; cursor: pointer;">+</button>
                     </div>
                 </div>
+
+
+                @if (!string.IsNullOrEmpty(Model.Message))
+                {
+                    <div class="@(Model.Message.Contains("успешно") ? "alert-success" : "alert-error")"
+                         style="margin: 15px 0; padding: 12px; border-radius: 6px; text-align: center;
+                                background: @(Model.Message.Contains("успешно") ? "#d4edda" : "#f8d7da");
+                                color: @(Model.Message.Contains("успешно") ? "#155724" : "#721c24");
+                                border: 1px solid @(Model.Message.Contains("успешно") ? "#c3e6cb" : "#f5c6cb");">
+                        @Model.Message
+                    </div>
+                }
 
                 <form method="post" asp-page-handler="AddToCart">
                     <input type="hidden" name="productId" value="@Model.product.ProductId" />
@@ -144,19 +144,19 @@
                 <li class="ulmy">
                     <div class="ulmy flex-container">
                         <div class="list flex-item-ul">Продукт</div>
-                        <div class="list flex-item-ul">Набор</div>
+                        <div class="list flex-item-ul">Средство против воспалений</div>
                     </div>
                 </li>
                 <li class="ulmy">
                     <div class="ulmy flex-container">
                         <div class="list flex-item-ul">Объем, мл</div>
-                        <div class="list flex-item-ul">90</div>
+                        <div class="list flex-item-ul">15</div>
                     </div>
                 </li>
                 <li class="ulmy">
                     <div class="ulmy flex-container">
                         <div class="list flex-item-ul">Категория</div>
-                        <div class="list flex-item-ul">Наборы</div>
+                        <div class="list flex-item-ul">Уход за лицом</div>
                     </div>
                 </li>
                 <li class="ulmy">
@@ -168,13 +168,7 @@
                 <li class="ulmy">
                     <div class="ulmy flex-container">
                         <div class="list flex-item-ul">Для кого</div>
-                        <div class="list flex-item-ul">Женщин</div>
-                    </div>
-                </li>
-                <li class="ulmy">
-                    <div class="ulmy flex-container">
-                        <div class="list flex-item-ul">Тип кожи</div>
-                        <div class="list flex-item-ul">Для всех типов кожи</div>
+                        <div class="list flex-item-ul">Мужчин и женщин</div>
                     </div>
                 </li>
             </ul>
@@ -200,7 +194,6 @@
             </div>
         </div>
     </div>
-
     <div class="base head roundl">
         <p class="HeaderText text" style="height:35px; margin:0; padding:5px;">
             <a href="#" style=" color: #000000; text-decoration: none; cursor: pointer; transition: color 0.3s ease;" class="agreement-link" data-document="oferta.pdf" data-title="Публичная оферта"> Оферта</a>,

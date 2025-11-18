@@ -1,0 +1,44 @@
+﻿@model WEBlaba2.Pages.CartModel
+
+@if (Model.CartItems.Any())
+{
+    <div class="cart-items">
+        @foreach (var item in Model.CartItems)
+        {
+            <div class="cart-item" data-cart-item-id="@item.CartItemId">
+                <img src="@item.Product.ImageUrl" style="object-fit: contain;" alt="@item.Product.Name" class="cart-item-image">
+                <div class="cart-item-details">
+                    <h3>@item.Product.Name</h3>
+                    <p class="price">@item.Product.Price.ToString("N0") ₽</p>
+                </div>
+                <div class="cart-item-quantity">
+                    <button type="button" class="quantity-btn" data-action="decrease" data-cart-item-id="@item.CartItemId">-</button>
+                    <span class="quantity-display">@item.Quantity</span>
+                    <button type="button" class="quantity-btn" data-action="increase" data-cart-item-id="@item.CartItemId">+</button>
+                </div>
+                <div class="cart-item-total">
+                    @((item.Product.Price * item.Quantity).ToString("N0")) ₽
+                </div>
+                <button type="button" class="btn-remove" data-cart-item-id="@item.CartItemId">Удалить</button>
+            </div>
+        }
+    </div>
+
+    <div class="cart-summary">
+        <div class="cart-total">
+            <h3>Итого: <span id="modal-cart-total">@Model.CartTotal.ToString("N0")</span> ₽</h3>
+        </div>
+        <div class="cart-actions flex-container-razdels">
+            <button type="button" class="btn-clear" id="clear-cart-btn">Очистить корзину</button>
+            <a href="/Checkout" class="btn-checkout">Оформить заказ</a>
+        </div>
+    </div>
+}
+else
+{
+    <div class="empty-cart">
+        <h2>Корзина пуста</h2>
+        <p>Добавьте товары из каталога</p>
+        <a href="/Catalog" class="a-btn-primary">Продолжить покупки</a>
+    </div>
+}

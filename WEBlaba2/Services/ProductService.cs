@@ -11,13 +11,38 @@ namespace WEBlaba2.Services
         public ProductService(ProductContext context)
         {
             _db = context;
-            _db.Database.EnsureCreated();
+
+     
+            EnsureProductsTableCreated();
 
             if (!_db.Products.Any())
             {
                 InitializeData();
             }
-            
+        }
+
+        private void EnsureProductsTableCreated()
+        {
+            try
+            {
+                var test = _db.Products.FirstOrDefault();
+            }
+            catch (Microsoft.Data.Sqlite.SqliteException ex) when (ex.SqliteErrorCode == 1)
+            {
+                // Создаём таблицу с правильным именем столбца
+                _db.Database.ExecuteSqlRaw(@"
+            CREATE TABLE Products (
+                ProductId INTEGER PRIMARY KEY AUTOINCREMENT, -- ← ИЗМЕНИТЬ Id на ProductId
+                Name TEXT NOT NULL,
+                Price REAL NOT NULL,
+                Description TEXT,
+                ImageUrl TEXT,
+                Category TEXT,
+                PageUrl TEXT,
+                count INTEGER,
+                CreatedDate TEXT DEFAULT (datetime('now'))
+            )");
+            }
         }
 
         private void InitializeData()
@@ -90,7 +115,42 @@ namespace WEBlaba2.Services
                         Category = "Уход",
                         PageUrl = "catalog/Alan_Hadash_Brazilian_Murumuru",
                         count = 123
+                    },
+                    new Product
+                    {
+                        ProductId = 7,
+                        Name = "Caudalie Vinopure Salicylic Spot Solution",
+                        Description = "Точечный крем против воспалений с салициловой кислотой и ниацинамидом",
+                        Price = 1312,
+                        ImageUrl = "imagesCatalog/Caudalie Vinopure Salicylic Spot Solution.jpg",
+                        Category = "Уход",
+                        PageUrl = "catalog/Caudalie Vinopure Salicylic Spot Solution",
+                        count = 21
+                    },
+                    new Product
+                    {
+                        ProductId = 8,
+                        Name = "Banderas Her Secret Pink Absolu Eau De Parfum",
+                        Description = "Парфюмерная вода | 50 мл",
+                        Price = 2826,
+                        ImageUrl = "imagesCatalog/Banderas Her Secret Pink Absolu Eau De Parfum.jpg",
+                        Category = "Парфюмерия",
+                        PageUrl = "catalog/Banderas Her Secret Pink Absolu Eau De Parfum",
+                        count = 31
+                    },
+                    new Product
+                    {
+                        ProductId = 9,
+                        Name = "Vivienne Sabo Premiere Grande Artistic Volume Mascara",
+                        Description = "Двойная тушь для ресниц с эффектом сценического объема",
+                        Price = 649,
+                        ImageUrl = "imagesCatalog/Vivienne Sabo Premiere Grande Artistic Volume Mascara.jpg",
+                        Category = "Косметика",
+                        PageUrl = "catalog/Vivienne Sabo Premiere Grande Artistic Volume Mascara",
+                        count = 33
                     }
+
+
                 );
 
                 _db.SaveChanges();

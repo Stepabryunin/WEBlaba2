@@ -11,6 +11,8 @@
     <link rel="stylesheet" href="~/styles/Stylescss.css" />
     <link rel="stylesheet" href="~/styles/stylesCart.css" />
     <link rel="stylesheet" href="~/styles/buttons.css" />
+    <link href="~/styles/modal.css" rel="stylesheet" />
+    <script src="~/Scripts/Model.js" defer></script>
 
 </head>
 <body>
@@ -57,7 +59,7 @@
                 @foreach (var item in Model.CartItems)
                 {
                     <div class="cart-item">
-                        <img src="@item.Product.ImageUrl" alt="@item.Product.Name" class="cart-item-image">
+                            <img src="@item.Product.ImageUrl" style="object-fit: contain;" alt="@item.Product.Name" class="cart-item-image">
                         <div class="cart-item-details">
                             <h3>@item.Product.Name</h3>
                             <p class="price">@item.Product.Price.ToString("N0") ₽</p>
@@ -124,11 +126,15 @@
             </div>
         </div>
 </div>
-    <div class="base head roundl ">
-        <p class="HeaderText text" style="height:35px; margin:0; padding:5px"><a style="color: #000000;" href="~/documents/oferta.pdf">Оферта</a>, <a style="color: #000000;" href="~/documents/Политика обработки персональных данных.pdf">Политика обработки персональных данных</a>, <a style="color: #000000;" href="~/documents/правила продажи.pdf">Правила продажи</a></p>
+    <div class="base head roundl">
+        <p class="HeaderText text" style="height:35px; margin:0; padding:5px;">
+            <a href="#" style=" color: #000000; text-decoration: none; cursor: pointer; transition: color 0.3s ease;" class="agreement-link" data-document="oferta.pdf" data-title="Публичная оферта"> Оферта</a>,
+            <a href="#" style=" color: #000000; text-decoration: none; cursor: pointer; transition: color 0.3s ease;" class="agreement-link" data-document="Политика обработки персональных данных.pdf" data-title="Политика обработки персональных данных"> Политика обработки персональных данных</a>,
+            <a href="#" style=" color: #000000; text-decoration: none; cursor: pointer; transition: color 0.3s ease;" class="agreement-link" data-document="правила продажи.pdf" data-title=" Правила продажи">Правила продажи</a>
+        </p>
         <p class="HeaderText text" style="height:35px; margin:0; padding:5px">© 2025 РИВ ГОШ. Все права защищены.</p>
         <p class="HeaderText text" style="height:35px; margin:0; padding:5px">Телефон: 8 (800) 2344460 | shopadmin@rivegauche.ru</p>
-
     </div>
+    @await Html.PartialAsync("Model")
 </body>
 </html> 
