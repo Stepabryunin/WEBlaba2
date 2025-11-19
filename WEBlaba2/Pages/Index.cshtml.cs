@@ -11,8 +11,10 @@ namespace WEBlaba2.Pages
         public string UserName { get; set; }
 
         private readonly ClientService _authService;
-        public IndexModel(SessionService sessionService, ClientService authService) : base(sessionService)
+        private readonly ProductService _productService;
+        public IndexModel(SessionService sessionService, ClientService authService, ProductService productService) : base(sessionService)
         {
+            _productService = productService;
             _authService = authService;
         }
         [BindProperty]
@@ -22,6 +24,7 @@ namespace WEBlaba2.Pages
 
         public IActionResult OnGet()
         {
+            var products=_productService.GetAllProducts();
             IsAuthenticated = _sessionService.IsAuthenticated();
 
             if (IsAuthenticated)

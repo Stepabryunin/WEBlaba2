@@ -1,8 +1,7 @@
 ﻿@page
-@model WEBlaba2.Pages.feedback.feedbackModel
+@model WEBlaba2.Pages.feedback.FeedbackModel
 @{
 }
-
 
 <!DOCTYPE html>
 <html>
@@ -10,11 +9,13 @@
     <title>Рив-Гош - Отзывы</title>
     <link href="~/styles/stylescss.css" rel="stylesheet" />
     <link href="~/styles/modal.css" rel="stylesheet" />
+    <link href="~/styles/feedback.css" rel="stylesheet" />
     <script src="~/Scripts/Model.js" defer></script>
 </head>
 <body class="menuCatalog">
-    <div  class="base header roundl">
-        <div class="grid-container-head-auth">
+    <!-- Хедер оставляем как есть -->
+    <div class="base header roundl">
+        <div class="grid-container-head">
             <div class="grid-item-center"><img style="width:150px" src="~/images/logo.png"></div>
             <div class="grid-item-center"><h1>РИВ ГОШ</h1></div>
             <div class="grid-item-center" bgcolor="#ffbb34">
@@ -39,114 +40,150 @@
                         <span class="nav-icon">📞</span>
                         <span class="nav-text">Контакты</span>
                     </a>
+                    <a asp-page="/feedback/feedback" class="nav-link active">
+                        <span class="nav-icon">⭐</span>
+                        <span class="nav-text">Отзывы</span>
+                    </a>
                     <a asp-page="/aboutme" class="nav-link">
                         <span class="nav-icon">ℹ️</span>
                         <span class="nav-text">О нас</span>
                     </a>
                 </nav>
-
-
-
             </div>
         </div>
 
         <div class="grid-item menu">
-            <h3>Оставьте ваш отзыв</h3>
-            <form class="feedback-form" method="post">
-                <!-- Однострочное текстовое поле -->
-                <div class="form-group full-width">
-                    <label for="name">Ваше имя *</label>
-                    <input type="text" id="name" name="name" required placeholder="Введите ваше имя">
-                </div>
+            <h2>Отзывы о нашем магазине</h2>
 
-                <!-- Однострочное текстовое поле -->
-                <div class="form-group full-width">
-                    <label for="email">Email *</label>
-                    <input type="email" id="email" name="email" required placeholder="Введите ваш email">
+            <!-- Сообщение об успехе -->
+            @if (TempData["SuccessMessage"] != null)
+            {
+                <div class="success-message">
+                    @TempData["SuccessMessage"]
                 </div>
+            }
 
-                <!-- Радио кнопки -->
-                <div class="form-group full-width">
-                    <label>Ваш пол</label>
-                    <div class="radio-group">
-                        <label class="radio-label">
-                            <input type="radio" name="gender" value="male">
-                            <span class="radiomark"></span>
-                            Мужской
-                        </label>
-                        <label class="radio-label">
-                            <input type="radio" name="gender" value="female">
-                            <span class="radiomark"></span>
-                            Женский
-                        </label>
-                    </div>
-                </div>
+            <!-- Форма добавления отзыва (только для авторизованных) -->
+            @if (Model.IsAuthenticated)
+            {
+                <div class="feedback-form-container">
+                    <h3>Оставьте ваш отзыв</h3>
+                    <form class="feedback-form" method="post" asp-page-handler="AddFeedback">
+                        @Html.AntiForgeryToken()
+                        <div class="form-group full-width">
+                            <label for="title">Заголовок отзыва *</label>
+                            <input type="text" id="title" asp-for="FeedbackInput.Title" required
+                                   placeholder="Кратко опишите ваш отзыв">
+                        </div>
 
-                <!-- Раскрывающийся список -->
-                <div class="form-group full-width">
-                    <label for="category">Категория отзыва</label>
-                    <select id="category" name="category">
-                        <option value="">Выберите категорию</option>
-                        <option value="service">Обслуживание</option>
-                        <option value="quality">Качество товаров</option>
-                        <option value="delivery">Доставка</option>
-                        <option value="prices">Цены</option>
-                        <option value="website">Работа сайта</option>
-                    </select>
-                </div>
+                      
+                        <div class="form-group full-width">
+                            <label for="rating">Ваша оценка *</label>
+                            <select id="rating" asp-for="FeedbackInput.Rating" class="form-control" required>
+                                <option value="">Выберите оценку</option>
+                                <option value="5">⭐️⭐️⭐️⭐️⭐️ Отлично (5)</option>
+                                <option value="4">⭐️⭐️⭐️⭐️ Хорошо (4)</option>
+                                <option value="3">⭐️⭐️⭐️ Удовлетворительно (3)</option>
+                                <option value="2">⭐️⭐️ Плохо (2)</option>
+                                <option value="1">⭐️ Очень плохо (1)</option>
+                            </select>
+                        </div>
 
-                <div class="form-group full-width">
-                    <label class="switch-label">
-                        <span>Получать рассылку новостей</span>
-                        <label class="switch">
-                            <input type="checkbox" name="newsletter">
-                            <span class="slider"></span>
-                        </label>
-                    </label>
-                </div>
+                       
+                        <div class="form-group full-width">
+                            <label for="category">Категория отзыва</label>
+                            <select id="category" asp-for="FeedbackInput.Category">
+                                <option value="">Выберите категорию</option>
+                                <option value="service">Обслуживание</option>
+                                <option value="quality">Качество товаров</option>
+                                <option value="delivery">Доставка</option>
+                                <option value="prices">Цены</option>
+                                <option value="website">Работа сайта</option>
+                            </select>
+                        </div>
 
-                <!-- Флажок (Checkbox) -->
-                <div class="form-group full-width">
-                    <label class="checkbox-label">
-                        <input type="checkbox" name="agree" required>
-                        <span class="checkmark"></span>
-                        Я согласен с обработкой персональных данных *
-                    </label>
-                </div>
+                        
+                        <div class="form-group full-width">
+                            <label for="message">Текст отзыва *</label>
+                            <textarea id="message" asp-for="FeedbackInput.Message" rows="5" required
+                                      placeholder="Подробно опишите ваши впечатления..."></textarea>
+                        </div>
 
-        
-                <div class="form-group full-width">
-                    <label for="message">Текст отзыва *</label>
-                    <textarea id="message" name="message" rows="5" required placeholder="Напишите ваш отзыв..."></textarea>
+                        
+                        <div class="form-group full-width">
+                            <button type="submit" class="submit-btn">Опубликовать отзыв</button>
+                        </div>
+                    </form>
                 </div>
+            }
+            else
+            {
+                <div class="auth-required">
+                    <p>Чтобы оставить отзыв, пожалуйста, <a asp-page="/auth/Authorization">авторизуйтесь</a>.</p>
+                </div>
+            }
 
-                <!-- Прокручивающееся текстовое поле (Textarea с фиксированной высотой) -->
-                <div class="form-group full-width">
-                    <label for="detailedFeedback">Подробный отзыв (опционально)</label>
-                    <textarea id="detailedFeedback" name="detailedFeedback" rows="3" placeholder="Если хотите поделиться более подробными впечатлениями..."></textarea>
-                </div>
+            <!-- Список всех отзывов -->
+            <div class="feedbacks-container">
+                <h3>Отзывы наших клиентов</h3>
 
-                <!-- Кнопка подтверждения -->
-                <div class="form-group full-width">
-                    <button type="submit" class="submit-btn">Отправить отзыв</button>
-                </div>
-            </form>
+                @if (Model.Feedbacks.Any())
+                {
+                    foreach (var feedback in Model.Feedbacks)
+                    {
+                        <div class="feedback-item">
+                            <div class="feedback-header">
+                                <div>
+                                    <span class="feedback-author">@feedback.UserName</span>
+                                    @if (!string.IsNullOrEmpty(feedback.Category))
+                                    {
+                                        <span class="feedback-category">@GetCategoryName(feedback.Category)</span>
+                                    }
+                                </div>
+                                <div>
+                                    <span class="feedback-date">@feedback.CreatedDate.ToString("dd.MM.yyyy HH:mm")</span>
+                                    <span class="feedback-rating">
+                                        @for (int i = 0; i < 5; i++)
+                                        {
+                                            if (i < feedback.Rating)
+                                            {
+                                                <span>⭐</span>
+                                            }
+                                            else
+                                            {
+                                                <span>☆</span>
+                                            }
+                                        }
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="feedback-title">@feedback.Title</div>
+                            <div class="feedback-message">
+                                <p>@feedback.Message</p>
+                            </div>
+                        </div>
+                    }
+                }
+                else
+                {
+                    <p>Пока нет отзывов. Будьте первым!</p>
+                }
+            </div>
         </div>
 
-        <div class="grid-item roundl" >
+    
+        <div class="grid-item roundl">
             <div class="flex-container" style="flex-direction:column ; justify-content:space-evenly">
                 <div class="flex-item-center">
-                    <a href="https://www.dior.com">
+                    <a href=https://www.dior.com />
                     <img class="baner" src="~/images/Dior_Logo.png">
-                    </a>
                 </div>
                 <div class="flex-item-center">
-                    <a href="https://www.versace.ru">
+                    <a href=https://www.versace.ru />
                     <img class="baner" src="~/images/Versace.jpg">
-                    </a>
                 </div>
                 <div class="flex-item-center">
-                    <a href="https://www.dove.com/us/en/home.html">
+                    <a href=https://www.dove.com/us/en/home.html>
                         <img class="baner" src="~/images/dove.jpg">
                     </a>
                 </div>
@@ -154,6 +191,7 @@
         </div>
     </div>
 
+    @await Html.PartialAsync("Model")
     <div class="base head roundl">
         <p class="HeaderText text" style="height:35px; margin:0; padding:5px;">
             <a href="#" style=" color: #000000; text-decoration: none; cursor: pointer; transition: color 0.3s ease;" class="agreement-link" data-document="oferta.pdf" data-title="Публичная оферта"> Оферта</a>,
@@ -164,6 +202,20 @@
         <p class="HeaderText text" style="height:35px; margin:0; padding:5px">Телефон: 8 (800) 2344460 | shopadmin@rivegauche.ru</p>
     </div>
 
-    @await Html.PartialAsync("Model")
 </body>
 </html>
+
+@functions {
+    public string GetCategoryName(string category)
+    {
+        return category switch
+        {
+            "service" => "Обслуживание",
+            "quality" => "Качество товаров",
+            "delivery" => "Доставка",
+            "prices" => "Цены",
+            "website" => "Работа сайта",
+            _ => category
+        };
+    }
+}

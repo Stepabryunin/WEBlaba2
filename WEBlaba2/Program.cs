@@ -13,12 +13,14 @@ builder.Services.AddDbContext<ProductContext>(options =>
     options.UseSqlite("Data Source=WEBlaba2.db"));
 
 
-builder.Services.AddDbContext<ClientContext>();
+builder.Services.AddScoped<DatabaseInitializer>();
 builder.Services.AddScoped<ProductService>();
 builder.Services.AddScoped<ClientService>();
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddScoped<SessionService>();
 builder.Services.AddScoped<CartService>();
+
+builder.Services.AddScoped<FeedbackService>();
 builder.Services.AddRazorPages();
 
 // Сессии
@@ -51,5 +53,20 @@ app.UseRouting();
 app.UseSession(); // ← ДОЛЖНО БЫТЬ ПОСЛЕ UseRouting() И ДО UseAuthorization()
 app.UseAuthorization();
 app.MapRazorPages();
+
+using (var scope = app.Services.CreateScope())
+{
+    try
+    {
+        Console.WriteLine("=== APP START: INITIALIZING DATABASE ===");
+        var initializer = scope.ServiceProvider.GetRequiredService<DatabaseInitializer>();
+        initializer.Initialize();
+        Console.WriteLine("=== DATABASE INITIALIZED SUCCESSFULLY ===");
+    }
+    catch (Exception ex)
+    {
+        Console.WriteLine($"=== DATABASE INITIALIZATION FAILED: {ex.Message} ===");
+    }
+}
 
 app.Run();

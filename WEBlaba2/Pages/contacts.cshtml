@@ -89,6 +89,10 @@
                         <span class="nav-icon">📞</span>
                         <span class="nav-text">Контакты</span>
                     </a>
+                    <a asp-page="/feedback/feedback" class="nav-link active">
+                        <span class="nav-icon">⭐</span>
+                        <span class="nav-text">Отзывы</span>
+                    </a>
                     <a asp-page="/aboutme" class="nav-link">
                         <span class="nav-icon">ℹ️</span>
                         <span class="nav-text">О нас</span>
@@ -102,17 +106,7 @@
 
         <div class="grid-item">
             <div>
-                <h3 class="HeaderText">Напишите нам</h3><br>
-                <form method="post" action="#" class="HeaderText">
-                    <input class="input" type="text" name="Name" placeholder="Ваше имя"><br>
-                    <input class="input"  type="text" name="Email" placeholder="Ваш Email"><br>
-                    <input class="input" type="text" name="Theme" placeholder="Тема"><br>
-                    <textarea class="input" cols="50" rows="10" name="Message" placeholder="Чем вы хотели с нами поделиться?"></textarea><br>
-
-                    <input type="button" value="Отправить">
-
-
-                </form><br>
+               
                 <h3 class="HeaderText">Вы можете найти наши магазины по карте</h3>
                 <div align="center">
                     <script type="text/javascript" charset="utf-8" async src="https://api-maps.yandex.ru/services/constructor/1.0/js/?um=constructor%3A4062e6e83cc524aa79bed994908808d46e01a200dd7ad0fef957806efdd9e358&amp;width=400&amp;height=300&amp;lang=ru_RU&amp;scroll=true"></script>
