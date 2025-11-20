@@ -96,7 +96,11 @@
                     <form method="post" asp-page-handler="ClearCart">
                         <button type="submit" class="btn-clear">Очистить корзину</button>
                     </form>
-                    <a href="/Checkout" class="btn-checkout">Оформить заказ</a>
+                    <div >
+                            <form method="post" asp-page-handler="Order">
+                                <button type="submit" class="btn-checkout">Оформить заказ</button>
+                            </form>
+                        </div>
                 </div>
             </div><br/>
         }

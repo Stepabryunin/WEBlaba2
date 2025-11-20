@@ -30,7 +30,11 @@
         </div>
         <div class="cart-actions flex-container-razdels">
             <button type="button" class="btn-clear" id="clear-cart-btn">Очистить корзину</button>
-            <a href="/Checkout" class="btn-checkout">Оформить заказ</a>
+            <div>
+                <form method="post" asp-page-handler="Order">
+                    <button type="submit" class="btn-checkout">Оформить заказ</button>
+                </form>
+            </div>
         </div>
     </div>
 }

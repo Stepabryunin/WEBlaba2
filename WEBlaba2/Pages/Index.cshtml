@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="~/styles/Stylescss.css" />
     <link href="~/styles/modal.css" rel="stylesheet" />
     <link href="~/styles/slider.css" rel="stylesheet"/>
+    <link href="~/styles/Cockie.css" rel="stylesheet"/>
     <script src="~/Scripts/slider.js" defer></script>
     <script src="~/Scripts/Model.js" defer></script>
 </head>
@@ -72,9 +73,6 @@
         </div>
     </div>
 
-
- 
-
    <div class="grid-container-main base ">
         <div class="grid-item sidebar-menu">
             <div class="menu-container">
@@ -100,15 +98,11 @@
                         <span class="nav-text">О нас</span>
                     </a>
                 </nav>
-
-          
-                
             </div>
         </div>
 
        <div class="grid-item">
            <div>
-
                 <h2 style="text-align:center;" > О нас</h2>
                 <img class="img-main " style="text-align:left;" src="images/Kosmetika.jpg" align="left">
                 <p class="menu">
@@ -176,9 +170,7 @@
                     <li>Продукты из каталога</li>
                 </ol>
 
-
                 <p class="menu">Удачных покупок!!!</p>
-
            </div>
        </div>
         <div class="grid-item sidebar-menu">
@@ -186,23 +178,31 @@
                 <div class="flex-item-center">
                     <a href=https://www.dior.com/>
                     <img class="baner" src="images/Dior_Logo.png">
-                    
                </div>
                 <div class="flex-item-center">
                     <a href=https://www.versace.ru/>
                     <img class="baner" src="images/Versace.jpg">
-                    
                 </div>
                 <div class="flex-item-center">
                     <a href=https://www.dove.com/us/en/home.html>
                         <img class ="baner" src="images/dove.jpg" >
                     </a>
                 </div>
-
            </div>
        </div>
-
    </div>
+
+    <!-- Уведомление о куках -->
+    <div id="cookieNotice" class="cookie-notice">
+        <div class="cookie-content">
+            <div class="cookie-icon">🍪</div>
+            <div class="cookie-text">
+                <h4>Мы используем cookies</h4>
+                <p>Это помогает нам сделать сайт удобнее. Продолжая использовать сайт, вы соглашаетесь с использованием cookies.</p>
+            </div>
+            <button id="acceptCookies" class="cookie-btn">OK</button>
+        </div>
+    </div>
 
     <div class="base head roundl">
         <p class="HeaderText text" style="height:35px; margin:0; padding:5px;">
@@ -215,5 +215,20 @@
     </div>
 
     @await Html.PartialAsync("Model")
+
+    <script>
+  
+        document.addEventListener('DOMContentLoaded', function() {
+            if (!localStorage.getItem('cookiesAccepted')) {
+                setTimeout(() => {
+                    document.getElementById('cookieNotice').style.display = 'block';
+                }, 1000);
+            }
+            document.getElementById('acceptCookies').addEventListener('click', function() {
+                localStorage.setItem('cookiesAccepted', 'true');
+                document.getElementById('cookieNotice').style.display = 'none';
+            });
+        });
+    </script>
 </body>
-</html> 
+</html>

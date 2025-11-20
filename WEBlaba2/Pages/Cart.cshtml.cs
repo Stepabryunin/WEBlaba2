@@ -9,12 +9,15 @@ namespace WEBlaba2.Pages
     {
         private readonly CartService _cartService;
 
+        private readonly ProductService _productService;
+
         public List<CartItem> CartItems { get; set; } = new List<CartItem>();
         public decimal CartTotal { get; set; }
 
-        public CartModel(CartService cartService, SessionService sessionService) : base(sessionService)
+        public CartModel(CartService cartService, SessionService sessionService,ProductService productService) : base(sessionService)
         {
             _cartService = cartService;
+            _productService = productService;
         }
 
         public async Task OnGetAsync()
@@ -63,6 +66,22 @@ namespace WEBlaba2.Pages
             int? clientId = _sessionService.GetCurrentUserId();
             if (clientId.HasValue)
             {
+                await _cartService.ClearCartAsync(clientId.Value);
+            }
+            return RedirectToPage();
+        }
+
+        public async Task<IActionResult> OnPostOrderAsync()
+        {
+            int? clientId = _sessionService.GetCurrentUserId();
+            if (clientId.HasValue)
+            {
+                var cart=await _cartService.GetCartItemsAsync(clientId.Value);
+                if (cart!=null)
+                foreach (var a in cart)
+                {
+                       await _productService.DifCount(a.ProductId, a.Quantity);
+                }
                 await _cartService.ClearCartAsync(clientId.Value);
             }
             return RedirectToPage();
@@ -189,6 +208,9 @@ namespace WEBlaba2.Pages
                 return new JsonResult(new { success = false, error = ex.Message });
             }
         }
+
+
+
     }
 
     

@@ -62,7 +62,7 @@ namespace WEBlaba2.Services
             }
         }
 
-        // Остальные методы остаются без изменений...
+        
         public async Task<List<CartItem>> GetCartItemsAsync(int clientId)
         {
             return await _context.CartItems
