@@ -35,7 +35,7 @@
                                 </div>
                             </div>
                             <div class="flex-container">
-                                <button type="submit" class="flex-item" style="margin: 0 3px; padding: 3px 6px; font-size:14px;border-radius: 6px; margin-bottom: 5px;">войти</button>
+                                <button type="submit" class="flex-item" style="text-align:center; margin: 0 3px; padding: 3px 6px; font-size:14px;border-radius: 6px; margin-bottom: 5px;">войти</button>
                                 <button type="button" id="registerBtn" class="flex-item" style="margin: 0 3px; padding: 3px 6px; font-size:14px;border-radius: 6px; margin-bottom: 5px;">Зарегистрироваться</button>
                             </div>
 
@@ -57,10 +57,13 @@
                             <div><strong>@Model.UserName</strong></div>
                         </div>
                         <div class="flex-container" style="justify-content:center; gap: 10px;">
-                            <a asp-page="/Profile" class="a-btn a-btn-profile">Профиль</a>
+                            <a asp-page="/Profile"
+                               style="display: inline-block; text-align:center; margin: 0 3px; padding: 3px 6px; font-size:14px; border-radius: 6px; margin-bottom: 5px; text-decoration: none; color: black; border: 1px solid black; background: white; cursor: pointer; line-height: normal;">
+                                Профиль
+                            </a>
                             <a asp-page="/Logout"
                                asp-route-returnUrl="@(ViewContext.HttpContext.Request.Path + ViewContext.HttpContext.Request.QueryString)"
-                               class="a-btn a-btn-logout">
+                               style="display: inline-block; text-align:center; margin: 0 3px; padding: 3px 6px; font-size:14px; border-radius: 6px; margin-bottom: 5px; text-decoration: none; color: black; border: 1px solid black; background: white; cursor: pointer; line-height: normal;">
                                 Выйти
                             </a>
                         </div>

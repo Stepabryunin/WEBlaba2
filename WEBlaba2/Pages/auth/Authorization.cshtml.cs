@@ -17,7 +17,7 @@ namespace WEBlaba2.Pages.auth
         [BindProperty]
         public LoginModel LoginData { get; set; }
 
-        [BindProperty(SupportsGet = true)] // Добавьте SupportsGet = true
+        [BindProperty(SupportsGet = true)] 
         public string ReturnUrl { get; set; }
 
         public string Message { get; set; }
@@ -33,7 +33,7 @@ namespace WEBlaba2.Pages.auth
 
         public async Task<IActionResult> OnPostAsync()
         {
-            // Уберите проверку ModelState.IsValid или обрабатывайте ее точечно
+            
             if (string.IsNullOrEmpty(LoginData.Login) || string.IsNullOrEmpty(LoginData.Password))
             {
                 Message = "Пожалуйста, заполните все обязательные поля";

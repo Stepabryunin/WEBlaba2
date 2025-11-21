@@ -10,6 +10,7 @@
     <link href="~/styles/modal.css" rel="stylesheet" />
     <link href="~/styles/slider.css" rel="stylesheet"/>
     <link href="~/styles/Cockie.css" rel="stylesheet"/>
+    <link href="~/styles/buttons.css" rel="stylesheet"/>
     <script src="~/Scripts/slider.js" defer></script>
     <script src="~/Scripts/Model.js" defer></script>
 </head>
@@ -38,16 +39,16 @@
                                 </div>
                             </div>
                             <div class="flex-container">
-                                <button type="submit" class="flex-item" style="margin: 0 3px; padding: 3px 6px; font-size:14px;border-radius: 6px; margin-bottom: 5px;">войти</button>
-                                <button type="button" id="registerBtn" class="flex-item" style="margin: 0 3px; padding: 3px 6px; font-size:14px;border-radius: 6px; margin-bottom: 5px;">Зарегистрироваться</button>
+                                <button type="submit" class="flex-item" style="text-align:center; margin: 0 3px; padding: 3px 6px; font-size:14px; border-radius: 6px; margin-bottom: 5px; border: 1px solid black; background: white; cursor: pointer;">войти</button>
+                                <button type="button" id="registerBtn" class="flex-item" style="text-align:center; margin: 0 3px; padding: 3px 6px; font-size:14px; border-radius: 6px; margin-bottom: 5px; border: 1px solid black; background: white; cursor: pointer;">Зарегистрироваться</button>
                             </div>
 
                             <script>
-                                document.getElementById('registerBtn').addEventListener('click', function() {
+                                document.getElementById('registerBtn').addEventListener('click', function () {
                                     window.location.href = '/auth/registration';
                                 });
                             </script>
-                            
+
                         </div>
                     </form>
                 }
@@ -60,10 +61,13 @@
                             <div><strong>@Model.UserName</strong></div>
                         </div>
                         <div class="flex-container" style="justify-content:center; gap: 10px;">
-                            <a asp-page="/Profile" class="btn-profile">Профиль</a>
+                            <a asp-page="/Profile"
+                               style="display: inline-block; text-align:center; margin: 0 3px; padding: 3px 6px; font-size:14px; border-radius: 6px; margin-bottom: 5px; text-decoration: none; color: black; border: 1px solid black; background: white; cursor: pointer; line-height: normal;">
+                                Профиль
+                            </a>
                             <a asp-page="/Logout"
                                asp-route-returnUrl="@(ViewContext.HttpContext.Request.Path + ViewContext.HttpContext.Request.QueryString)"
-                               class="btn-logout">
+                               style="display: inline-block; text-align:center; margin: 0 3px; padding: 3px 6px; font-size:14px; border-radius: 6px; margin-bottom: 5px; text-decoration: none; color: black; border: 1px solid black; background: white; cursor: pointer; line-height: normal;">
                                 Выйти
                             </a>
                         </div>
